@@ -6,7 +6,7 @@ An interactive reading of the **Ferâşet-i Şerîfe Beratı**, an Ottoman berat
 
 A companion to Dikilitaş ([obelisk-390](https://github.com/CahidArda/obelisk-390), live at [obelisk-390.cahidarda.com](https://obelisk-390.cahidarda.com)), built the same way: the document on one side, a reading on the other.
 
-- **Document**: a deep-zoom replica, 8000 × 17131 px. Hover or tap a line to highlight it and read it.
+- **Document**: a deep-zoom replica, 8000 × 17131 px. The full image is in the repository: [`replica-8000.jpg`](replica-8000.jpg) (20 MB). Hover or tap a line to highlight it and read it.
 - **Read**: each element in order (invocation, tuğra, opening formula, lines 1–7, place of issue), with the Ottoman text, a transliteration, a translation, a note, and how sure the reading is. **See it** zooms the document to that passage.
 - **Languages**: English, Türkçe, Français, 日本語.
 
