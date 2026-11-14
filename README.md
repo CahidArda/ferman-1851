@@ -2,7 +2,9 @@
 
 An interactive reading of the **Ferâşet-i Şerîfe Beratı**, an Ottoman berat of Sultan Abdülmecid dated 8 Rebîülevvel 1267 (11 January 1851). It grants a share in the sweeping of the Kaaba in Mecca and the Prophet’s tomb in Medina. The document is in the Sadberk Hanım Museum, Istanbul (gift of Reya Danışman).
 
-A companion to Dikilitaş ([obelisk-390](https://github.com/CahidArda/obelisk-390)), built the same way: the document on one side, a reading on the other.
+**Live:** [ferman-1851.cahidarda.com](https://ferman-1851.cahidarda.com)
+
+A companion to Dikilitaş ([obelisk-390](https://github.com/CahidArda/obelisk-390), live at [obelisk-390.cahidarda.com](https://obelisk-390.cahidarda.com)), built the same way: the document on one side, a reading on the other.
 
 - **Document**: a deep-zoom replica, 8000 × 17131 px. Hover or tap a line to highlight it and read it.
 - **Read**: each element in order (invocation, tuğra, opening formula, lines 1–7, place of issue), with the Ottoman text, a transliteration, a translation, a note, and how sure the reading is. **See it** zooms the document to that passage.
