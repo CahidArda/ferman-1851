@@ -2,7 +2,7 @@
 
 An interactive reading of the **Ferâşet-i Şerîfe Beratı**, an Ottoman berat of Sultan Abdülmecid dated 8 Rebîülevvel 1267 (11 January 1851). It grants a share in the sweeping of the Kaaba in Mecca and the Prophet’s tomb in Medina. The document is in the Sadberk Hanım Museum, Istanbul (gift of Reya Danışman).
 
-A companion to Dikilitaş ([obelisk-390](../README.md)), built the same way: the document on one side, a reading on the other.
+A companion to Dikilitaş ([obelisk-390](https://github.com/CahidArda/obelisk-390)), built the same way: the document on one side, a reading on the other.
 
 - **Document**: a deep-zoom replica, 8000 × 17131 px. Hover or tap a line to highlight it and read it.
 - **Read**: each element in order (invocation, tuğra, opening formula, lines 1–7, place of issue), with the Ottoman text, a transliteration, a translation, a note, and how sure the reading is. **See it** zooms the document to that passage.
@@ -10,10 +10,10 @@ A companion to Dikilitaş ([obelisk-390](../README.md)), built the same way: the
 
 ## Running it
 
-No build step. From the repository root:
+No build step. Serve the folder with any static server:
 
 ```sh
-node server.js        # http://localhost:8080/ferman/
+node server.js        # http://localhost:8080
 ```
 
 OpenSeadragon, EB Garamond, Amiri and Noto Serif JP load from CDNs. The image tiles load from a public Upstash Blob bucket, so the repository stays light.
@@ -41,10 +41,11 @@ The photographs are not in the repository. Requirements: Python 3 with `opencv-c
 
 ## Reading v2: words first, then boxes
 
-The current reading was made word by word (`scripts/v2_*.py`, instructions in `READING-V2.md`): `v2_lines.py` unrolls each curved line along a fitted centreline, and `v2_words.py` cuts it into candidate words from the ink. Each line was then read by one agent, its words re-read blind by others, and every disagreement settled by a third from the letter shapes (`v2_brief.py`, `v2_final.py`). The readers then grouped the verified words into phrases, and `v2_boxes.py` builds each box's outline from the ink of exactly those words and checks it (all of its own ink inside, almost none of its neighbours'). The word-level results, with each word's outline and confidence, are in `scripts/reading-words.json`; the working files (crops, readings, disputes) go to `ferman/work/`, which is not committed.
+The current reading was made word by word (`scripts/v2_*.py`, instructions in `READING-V2.md`): `v2_lines.py` unrolls each curved line along a fitted centreline, and `v2_words.py` cuts it into candidate words from the ink. Each line was then read by one agent, its words re-read blind by others, and every disagreement settled by a third from the letter shapes (`v2_brief.py`, `v2_final.py`). The readers then grouped the verified words into phrases, and `v2_boxes.py` builds each box's outline from the ink of exactly those words and checks it (all of its own ink inside, almost none of its neighbours'). The word-level results, with each word's outline and confidence, are in `scripts/reading-words.json`; the working files (crops, readings, disputes) go to `work/`, which is not committed.
 
 ## Sources and caveats
 
 - Title, date, materials and description are from the museum’s label.
-- **The reading is provisional.** It was made from the photographs, not the original. The opening formula, the Qur’anic verse (22:26), the closing and the date are secure. Much of the body is partial: each box’s confidence comes from its words, and `…` marks a word not read. The two personal names in lines 4–5 (Şefîk Bey, ‘Alî Rızâ) are probable readings, not certain ones. The small gold invocation at the top follows the ferâşet formula; several of its interlaced words are guesses.
+- **The reading is provisional.** It was proofread phrase by phrase against the image (instructions in `PROOFREAD.md`, findings in `PROOFREAD-REPORT.md`); `scripts/reading.json` and `scripts/reading-words.json` predate that pass, so `data.js` is the current reading.
+- The first reading was made from the photographs, not the original. The opening formula, the Qur’anic verse (22:26), the closing and the date are secure. Much of the body is partial: each box’s confidence comes from its words, and `…` marks a word not read. The two personal names in lines 4–5 (Şefîk Bey, ‘Alî Rızâ) are probable readings, not certain ones. The small gold invocation at the top follows the ferâşet formula; several of its interlaced words are guesses.
 - The Ottoman text is shown typeset in Naskh, not as written in dîvânî.
