@@ -51,6 +51,8 @@ html[lang=ja] .plate h1{letter-spacing:.08em}
 .zb button{width:34px;height:34px;border:1px solid var(--ink);background:var(--paper);font-size:17px;line-height:1;display:grid;place-items:center}
 .cap{text-align:center;pointer-events:none;padding-top:8px}
 .cap .h{font-style:italic;font-size:13.5px;color:var(--muted)}
+#start{display:none;pointer-events:auto;margin:10px auto 0;padding:11px 22px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);font-size:15px;letter-spacing:.04em}
+@media (max-width:959px){#start{display:block;margin:0 auto}}
 .info{flex:none}
 #card{position:relative;margin:6px 16px 0;background:var(--paper);border:1px solid var(--ink);padding:9px 40px 10px 14px;display:none}
 body.carded .cap{display:none}
@@ -66,6 +68,8 @@ body.carded .cap{display:none}
 #card .x{position:absolute;top:6px;right:6px;width:30px;height:30px;font-size:14px;color:var(--muted)}
 @media (max-width:959px){
   .info{height:130px;position:relative;z-index:4}
+  .cap{height:100%;box-sizing:border-box;padding:0 16px 6px;display:flex;flex-direction:column;justify-content:center;gap:12px}
+  #start{width:100%;max-width:340px;padding:14px 18px;font-size:16px}
   #card{position:absolute;left:16px;right:16px;bottom:8px;margin:0;max-height:min(60vh,calc(100dvh - 120px));overflow-y:auto;box-shadow:0 -4px 0 var(--paper),3px 3px 0 rgba(43,36,32,.1)}
 }
 @media (min-width:960px){#card{display:none!important}}
@@ -206,7 +210,7 @@ html[lang=ja] .r .en{font-size:15.5px;line-height:1.75}
       <div id="tip"></div>
     </div>
     <div class="info">
-      <div class="cap"><div class="h" id="hint"></div></div>
+      <div class="cap"><div class="h" id="hint"></div><button id="start"></button></div>
       <div id="card"><button class="x" id="cardX">✕</button><div class="ref" id="cRef"></div><div class="t" id="cT"></div><div class="x2" id="cX"></div><div class="row"><button class="more" id="cMore"></button><div class="nav"><button id="cPrev">‹</button><button id="cNext">›</button></div></div></div>
     </div>
   </section>
@@ -286,7 +290,10 @@ new OpenSeadragon.MouseTracker({element:viewer.canvas,
 function tooSmall(u){const p=D.regions[u[0]]&&D.regions[u[0]].polys[u[1]];if(!p)return false;const b=bboxOf(p),vp=viewer.viewport,
   a=vp.imageToViewerElementCoordinates(new OpenSeadragon.Point(b[0],b[1])),z=vp.imageToViewerElementCoordinates(new OpenSeadragon.Point(b[2],b[3])),c=viewer.container;
   return Math.max((z.x-a.x)/c.clientWidth,(z.y-a.y)/c.clientHeight)<.3}
-viewer.addHandler('canvas-click',e=>{if(!e.quick)return;const p=imgAt(e.position);const u=hit(p.x,p.y);if(u){const f=tooSmall(u);if(f)lastUser=0;select(u,{scroll:true,from:'doc',focus:f})}else clearSel()});
+// Tapping a tiny line is hard: fall back to the nearest phrase within a finger's width.
+function near(x,y,pos){const q=imgAt(new OpenSeadragon.Point(pos.x+28,pos.y)),tol=Math.abs(q.x-x);let best=null,bd=tol;
+  for(const id of hitOrder){const r=D.regions[id];if(!r)continue;r.polys.forEach((p,i)=>{const b=bboxOf(p);const dx=Math.max(b[0]-x,0,x-b[2]),dy=Math.max(b[1]-y,0,y-b[3]),d=Math.hypot(dx,dy);if(d<bd){bd=d;best=[id,i]}})}return best}
+viewer.addHandler('canvas-click',e=>{if(!e.quick)return;const p=imgAt(e.position);const u=hit(p.x,p.y)||near(p.x,p.y,e.position);if(u){const f=tooSmall(u);if(f)lastUser=0;select(u,{scroll:true,from:'doc',focus:f})}else clearSel()});
 
 // ---------- selection ----------
 function select(u,o={}){sel=u;soft=null;paint();if(history.replaceState)history.replaceState(null,'','#'+u[0]+(byId[u[0]].chunks.length>1?'.'+(u[1]+1):''));
@@ -342,7 +349,7 @@ function observe(){if(io)io.disconnect();io=new IntersectionObserver(()=>{
 function setView(v){document.body.classList.toggle('reading',v==='read');$('#tDoc').classList.toggle('on',v!=='read');$('#tRead').classList.toggle('on',v==='read');if(v==='read')hideCard();else if(sel)showCard(sel)}
 $('#tDoc').onclick=()=>setView('doc');$('#tRead').onclick=()=>setView('read');
 function renderUI(){document.documentElement.lang=lang;$$('[data-i]').forEach(el=>el.textContent=t(el.dataset.i));
-  $('#hint').textContent=t(touch?'hintTouch':'hintMouse');$('#tDoc').textContent=t('doc');$('#tRead').textContent=t('read');$('#aboutBtn').textContent=t('about');
+  $('#hint').textContent=t(touch?'hintTouch':'hintMouse');$('#start').textContent=t('start');$('#tDoc').textContent=t('doc');$('#tRead').textContent=t('read');$('#aboutBtn').textContent=t('about');
   $('#cMore').textContent=t('read');const ld=$('#loader');if(ld)ld.textContent=t('loading');$('#langCode').textContent=I.langs.find(l=>l[0]===lang)[1];
   $('#langMenu').innerHTML=I.langs.map(([c,n])=>'<button data-l="'+c+'" class="'+(c===lang?'on':'')+'">'+n+'</button>').join('')+'<button class="ab" data-ab="1">'+esc(t('about'))+'</button>';
   $('#home').title=t('whole');renderRead();renderAbout();if(sel&&$('#card').classList.contains('show'))showCard(sel)}
@@ -356,6 +363,7 @@ function renderAbout(){const a=I.about[lang]||I.about.en;
   $('#abX').onclick=closeAbout}
 function openAbout(){$('#about').classList.add('open');if(history.replaceState)history.replaceState(null,'','#about')}
 function closeAbout(){$('#about').classList.remove('open');if(history.replaceState)history.replaceState(null,'',location.pathname+location.search)}
+$('#start').onclick=()=>{setView('doc');lastUser=0;select(U[0],{focus:true})};
 $('#aboutBtn').onclick=openAbout;$('#about').onclick=e=>{if(e.target.id==='about')closeAbout()};
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($('#about').classList.contains('open'))closeAbout();else clearSel()}
   if(['ArrowDown','ArrowRight','ArrowUp','ArrowLeft'].includes(e.key)&&sel&&!e.target.closest('#rs')){const i=uix(sel)+((e.key==='ArrowDown'||e.key==='ArrowRight')?1:-1);if(i>=0&&i<U.length){e.preventDefault();select(U[i],{focus:true,scroll:true})}}});
