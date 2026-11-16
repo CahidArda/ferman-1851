@@ -282,7 +282,11 @@ function setHover(u,pos){hovU=u;paint();const tip=$('#tip');
 new OpenSeadragon.MouseTracker({element:viewer.canvas,
   moveHandler:e=>{if(e.pointerType!=='mouse')return;const p=imgAt(e.position);const u=hit(p.x,p.y);if(!same(u,hovU)||u)setHover(u,e.position)},
   leaveHandler:()=>setHover(null)}).setTracking(true);
-viewer.addHandler('canvas-click',e=>{if(!e.quick)return;const p=imgAt(e.position);const u=hit(p.x,p.y);if(u)select(u,{scroll:true,from:'doc'});else clearSel()});
+// Zoomed out: the phrase is small on screen, so a click on it zooms in to it.
+function tooSmall(u){const p=D.regions[u[0]]&&D.regions[u[0]].polys[u[1]];if(!p)return false;const b=bboxOf(p),vp=viewer.viewport,
+  a=vp.imageToViewerElementCoordinates(new OpenSeadragon.Point(b[0],b[1])),z=vp.imageToViewerElementCoordinates(new OpenSeadragon.Point(b[2],b[3])),c=viewer.container;
+  return Math.max((z.x-a.x)/c.clientWidth,(z.y-a.y)/c.clientHeight)<.3}
+viewer.addHandler('canvas-click',e=>{if(!e.quick)return;const p=imgAt(e.position);const u=hit(p.x,p.y);if(u){const f=tooSmall(u);if(f)lastUser=0;select(u,{scroll:true,from:'doc',focus:f})}else clearSel()});
 
 // ---------- selection ----------
 function select(u,o={}){sel=u;soft=null;paint();if(history.replaceState)history.replaceState(null,'','#'+u[0]+(byId[u[0]].chunks.length>1?'.'+(u[1]+1):''));
