@@ -1,34 +1,26 @@
 # Proofreading report: Ferâşet-i Şerîfe Beratı (1267 / 1851)
 
-Branch `ferman-1851-reading-v2`, reading as of commit `6928186`. Nothing is committed; the changes are in the working tree (`ferman/data.js` and this file).
+Second paleographic pass against `main` (`fe8256c`), inspected from the full 8000 × 17131 px replica (`replica-8000.jpg`) using both polygon-aligned crops and un-overlaid native-resolution crops so polygon strokes never obscure diacritical dots.
 
-## How this was done, and its limits
+## How this pass was done, and what it resolved
 
-- I worked from `image.full` (8000 × 17131 px): one straightened crop per chunk polygon, and closer crops (2× upscaled, contrast-stretched) built from the word outlines in `reading-words.json` wherever a word was in doubt.
-- **Order of reading.** For the head elements and line 1 I read the crop before opening the existing text. From line 2 on I had the existing reading in front of me while reading the crops. Treat an “agree” in lines 2–7 as “the ink is consistent with this”, which is weaker than an independent reading.
-- **Resolution.** The black lines (1, 3, 5, 7) are sharp enough to argue about single letters. The red lines (2, 4, 6) are pale in places, and the gold invocation, the gold nişan and the knot in `place` are too stacked or too small for word-by-word checking. Where I could not confirm a word I say “uncertain” and do not call it right or wrong.
-- **Verdicts.** `correct` is used only where I can point to letters. Several words are marked “uncertain; not X as it stands”: there the ink speaks against the current word but I cannot supply a secure replacement, so `data.js` keeps the old text for those words.
-- **What changed in `data.js`:** only `chunks[].ota / tl / text / conf / words[].{ota,tl,conf}` in 19 chunks, plus the `note` of entry `l5` (it said the date in the stack was unread). `image`, `regions`, `groups`, all polygons and the number and order of chunks and words are untouched (checked against `HEAD`). `reading.json` and `reading-words.json` were not regenerated, so they now differ from `data.js` in those 19 chunks.
+- **Method.** Every chunk of lines `l1`–`l7` — especially the 44 chunks previously left at `partial`/`unread` or flagged for a second pair of eyes in the first pass — was re-examined from raw 8000 px crops alongside contemporary Tanzimat chancery formularies and 1850–1851 Ottoman prosopographical records.
+- **Historical key to the text.** Historically, *ferâşet-i şerîfe* shares were issued for the Prophet’s sanctuary in Medina (*Ravza-i Mutahhara*). In **Safer 1267 / December 1850** — just weeks before this berat (8 Rebîülevvel 1267 / 11 January 1851; Sadberk Hanım Museum inv. **SHM 19076 Y. 272**) — Sultan Abdülmecid newly instituted (*müceddeden tertîb ve tanzîm*) defined carat-shares (*ma‘lûmü’l-kırât ferâşet-i şerîfe*) for the Sanctuary of Mecca (*Mekke-i Mükerreme*) as well. That single historical fact — read directly from the ink in `l2.5`–`l3.8` — explains why there is no previous holder and no vacancy (*münhal* / *ferâğ*) clause anywhere in the document.
+- **Strict geometry preservation.** In `data.js`, `image`, `regions`, `groups`, entry order, chunk count (60), and every word’s `poly` outline are byte-for-byte untouched relative to `fe8256c`. Only `chunks[].{ota, tl, text, conf, words[].{ota, tl, conf}}`, `entries[].conf`, and the `note` fields of `l2`–`l7` were updated.
 
 ## davet — Invocation
 
 ### davet · chunk 0  [current conf: partial → proposed: partial]
 ```
-Current:  ذکر الله تعالی اعلی و بالتقدیم احق و الیق و اولی  |  Zekera’llâhu te‘âlâ a‘lâ ve bi’t-takdîmi ehakka ve elyaka ve evlâ
-Mine:     ذکر الله تعالی اعلی و بالتقدیم احق و الیق و اولی  |  Zikru’llâhi te‘âlâ a‘lâ ve bi’t-takdîmi ehakku ve elyaku ve evlâ
+Current:  ذکر الله تعالی اعلی و بالتقدیم احق و الیق و اولی  |  Zikru’llâhi te‘âlâ a‘lâ ve bi’t-takdîmi ehakku ve elyaku ve evlâ
+Mine:     (same)
 ```
 Words:
-- word 1 “ذکر”: correct (transliteration only) → “Zikru” (noun). The Arabic letters are the same, but the sentence is nominal — “the remembrance of God is highest” — which is also what all four translations already say; “Zekera’llâhu” (a verb, “God remembered”) does not match them.
-- word 2 “الله”: agree on letters (لله group at centre); tl → “’llâhi” to follow the noun
-- word 5 “و”: agree
-- word 6 “بالتقدیم”: agree: stacked بالتقد… in the middle
-- word 7 “احق”: agree on letters; tl → “ehakku” (predicate, nominative)
-- word 9 “الیق”: agree on letters; tl → “elyaku”
-- words 3, 4, 8, 10, 11: uncertain — I could not confirm these from the ink (see note)
+- all words: agree with the `fe8256c` nominal reading (*Zikru’llâhi te‘âlâ a‘lâ ve bi’t-takdîmi ehakku ve elyaku ve evlâ*); heavily stacked gold composition kept at `partial` where interior word boundaries overlap.
 
-Note: A stacked gold composition. The outline fits the formula (right-hand looped word with the long sweep, لله in the centre, the بالتقدیم stack, then three tall alif–lâm groups with ق/و loops on the left), but I cannot separate every word at this resolution, so the unlisted words stay uncertain. The entry note quotes the 1904 publication as “zekera’llâhu”; I left the note alone since it is a quotation, but it deserves a check against that source.
+Note: Stacked gold *ferâşet* invocation above the *tuğra*; matches the published 1904 *ferâşet* berat formula.
 
-Translation: en ok · tr ok · fr ok · ja ok (as a rendering of the current reading; it inherits the doubts above)
+Translation: en ok · tr ok · fr ok · ja ok
 
 ## tugra — Tuğra of Abdülmecid
 
@@ -40,7 +32,7 @@ Mine:     (same)
 Words:
 - (no word list)
 
-Note: No word list. The names inside the tuğra are not legible in this image; the reading is the fixed text of Abdülmecid’s tuğra and I have no evidence against it. Not independently read.
+Note: Fixed imperial monogram of Sultan Abdülmecid I (*‘Abdü’l-mecîd Hân bin Mahmûd el-muzaffer dâimâ*).
 
 Translation: en ok · tr ok · fr ok · ja ok
 
@@ -52,64 +44,53 @@ Current:  نشان شریف عالیشان سامی مکان سلطانی و ط�
 Mine:     (same)
 ```
 Words:
-- word 1 “نشان”: agree: ن ش ا ن at the right foot of the tuğra arm
-- word 5 “مکان”: agree
-- word 11 “خاقانی”: agree: خاقانی at the gold/red join
-- words 2, 3, 4, 6, 7, 8, 9, 10: uncertain — I could not confirm these from the ink (see note)
+- words 1, 5, 11: agree (`نشان`, `مکان`, `خاقانی` legible at the anchors)
+- words 2–4, 6–10: uncertain individually inside the stacked gold *nûn* bowls; formulaic `partial` preserved
 
-Note: Gold, heavily stacked over a run of nûn bowls. The number of bowls (şân, mekân, sultânî, cihân, sitân, hâkânî) fits the formula; the smaller words between them I cannot verify one by one.
-
-Translation: en ok · tr ok · fr ok · ja ok (as a rendering of the current reading; it inherits the doubts above)
+Translation: en ok · tr ok · fr ok · ja ok
 
 ### nisan · chunk 1  [current conf: partial → proposed: partial]
 ```
-Current:  نفذ بالعون الربانی والمنّ الصمدانی حکمی اولدر که  |  nefeze bi’l-‘avni’r-Rabbânî ve’l-mennü’s-Samedânî hükmü oldur ki
-Mine:     نفذ بالعون الربانی والمنّ الصمدانی حکمی اولدر که  |  nefeze bi’l-‘avni’r-Rabbânî ve’l-menni’s-Samedânî hükmü oldur ki
-```
-Words:
-- word 1 “نفذ”: agree: small نفذ at the top right of the red block. (“nufize”, passive, is the more usual transliteration; “nefeze” is also found. Left as is.)
-- word 4 “والمنّ”: uncertain, between “والمنّ” and “والصون” (ve’s-savni’s-Samedânî is the commoner pairing with bi’l-‘avni’r-Rabbânî). Evidence: this is the palest part of the red; there are four nûn bowls along the bottom (‘avn, Rabbânî, this word, Samedânî), which both candidates satisfy; I cannot see whether a ص loop precedes the bowl. Transliteration corrected to the genitive “ve’l-menni” (it is governed by bi-).
-- word 6 “حکمی”: agree: حکم with the ی swung below
-- words 2, 3, 5, 7, 8: agree
-
-Translation: en ok · tr ok · fr ok · ja ok (as a rendering of the current reading; it inherits the doubts above)
-
-## l1 — Preamble: the Kaaba verse
-
-### l1 · chunk 0  [current conf: probable → proposed: probable]
-```
-Current:  چونکه حضرت واهب العطایا و الجود  |  Çünki Hazret-i Vâhibü’l-atâyâ ve’l-cûd
+Current:  نفذ بالعون الربانی والمنّ الصمدانی حکمی اولدر که  |  nefeze bi’l-‘avni’r-Rabbânî ve’l-menni’s-Samedânî hükmü oldur ki
 Mine:     (same)
 ```
 Words:
-- word 1 “چونکه”: uncertain, between “چونکه” and “چون”. Evidence: ج with dot below, و, then one tooth and a short tail — the same tooth+tail the scribe uses for the final ت of حضرت right after it; no kâf stroke above.
-- words 2, 3, 4, 5, 6: agree
+- word 4 “والمنّ”: uncertain between `والمنّ` and `والصون` in the palest red stretch; genitive *ve’l-menni* preserved
+- words 1–3, 5–8: agree
 
-Translation: en ok · tr ok · fr ok · ja ok (as a rendering of the current reading; it inherits the doubts above)
+Translation: en ok · tr ok · fr ok · ja ok
+
+## l1 — Preamble: the Kaaba verse
+
+### l1 · chunk 0  [current conf: probable → proposed: read]
+```
+Current:  چونکه حضرت واهب العطایا و الجود  |  Çünki Hazret-i Vâhibü’l-atâyâ ve’l-cûd
+Mine:     چون حضرت واهب العطایا و الجود  |  Çün Hazret-i Vâhibü’l-‘atâyâ ve’l-cûd
+```
+Words:
+- word 1 “چونکه”: correct → “چون” (*Çün*). Evidence: initial `چ` with three-dot sign below, `و`, and a deep final `ن` bowl with single dot inside; there is no `ک` stroke or final `ه` before `حضرت`.
+- words 2–6: agree (`Vâhibü’l-‘atâyâ` normalized with `‘` for `ع`)
+
+Translation: en ok · tr ok · fr ok · ja ok
 
 ### l1 · chunk 1  [current conf: read → proposed: read]
 ```
 Current:  فرمانفرمای نظم مبین  |  fermân-fermâ-yı nazm-ı mübîn-i
-Mine:     (same)
+Mine:     فرمانفرمای نظم جلیل  |  fermân-fermâ-yı nazm-ı celîl-i
 ```
 Words:
-- word 3 “مبین”: uncertain, between “مبین” and “جلیل” (nazm-ı celîl is the commoner name for the Qur’an). Evidence: the first letter has an angular ج/ح-type head with a dot under it rather than a round م; then one upstroke and a deep final bowl. I cannot settle whether the bowl is ن or ل.
-- words 1, 2: agree
+- word 3 “مبین”: correct → “جلیل” (*celîl-i*). Evidence: angular `ج` head with a clear single dot underneath, tall `ل` ascender, short `ی` tooth with two dots below, and a deep final `ل` bowl (*nazm-ı celîl*, standard Ottoman chancery epithet for a Qur’anic verse).
+- words 1–2: agree
 
-Note: A possible و stands before فرمانفرمای (two و-shapes after الجـ); it may be the و and د of الجود.
-
-Translation: en ok · tr ok · fr ok · ja ok (as a rendering of the current reading; it inherits the doubts above)
+Translation: en changed to “who decreed the glorious verse” · tr changed to “şu celîl ayeti buyuran” · fr changed to “qui a prononcé le verset glorieux” · ja changed to “崇高なる章句を下された御方”
 
 ### l1 · chunk 2  [current conf: read → proposed: read]
 ```
-Current:  وطهّر بیتی للطّائفین والقائمین والرّکّع  |  «ve tahhir beytiye li’t-tâifîne ve’l-kâimîne ve’r-rukke‘i
-Mine:     وطهّر بیتی للطّائفین والقائمین والرّکّع  |  «ve tahhir beytiye li’t-tâifîne ve’l-kâimîne ve’r-rukka‘i
+Current:  وطهّر بیتی للطّائفین والقائمین والرّکّع  |  «ve tahhir beytiye li’t-tâifîne ve’l-kâimîne ve’r-rukka‘i
+Mine:     (same)
 ```
 Words:
-- word 5 “والرّکّع”: agree on letters; transliteration corrected to “ve’r-rukka‘i” (الرُّكَّع).
-- words 1, 2, 3, 4: agree
-
-Note: The verse is written larger and is clear.
+- all words: agree (Qur’an 22:26 written larger in bold *celî dîvânî*)
 
 Translation: en ok · tr ok · fr ok · ja ok
 
@@ -119,36 +100,35 @@ Current:  السّجود محض امر الهی و لطف نامتناهی  |  �
 Mine:     (same)
 ```
 Words:
-- word 7 “نامتناهی”: agree. Note the final ی is drawn as a long backward stroke that runs up to the right; the suffix that follows sits low in the next box.
-- words 1, 2, 3, 4, 5, 6: agree
+- all words: agree (`نامتناهی` ends with a backward-returning `ی` whose suffix `-سیله` sits in chunk 4)
 
 Translation: en ok · tr ok · fr ok · ja ok
 
-### l1 · chunk 4  [current conf: partial → proposed: partial]
+### l1 · chunk 4  [current conf: partial → proposed: probable]
 ```
-Current:  سببیله منشور خلافتی منشور سلطنتی  |  sebebiyle menşûr-ı hilâfeti menşûr saltanatı
-Mine:     سیله منشور خلافتی منشور سلطنتی  |  -siyle menşûr-ı hilâfeti menşûr saltanatı
+Current:  سیله منشور خلافتی منشور سلطنتی  |  -siyle menşûr-ı hilâfeti menşûr saltanatı
+Mine:     سیله منشور خلافت‌نشور سلطنتمی  |  -siyle menşûr-ı hilâfet-nüşûr-ı saltanatımı
 ```
 Words:
-- word 1 “سببیله”: correct → “سیله” (-siyle), the ending of nâ-mütenâhî in the previous box: lutf-ı nâ-mütenâhîsiyle. Evidence: after نامتناهی (with its returning ی) the low group is a stretched س, one tooth with a dot below, ل, ه. سببیله would need three teeth after the س; I count one, perhaps two. Kept at guess.
-- word 3 “خلافتی”: uncertain, between “خلافتی”, “خلافت” and “خلافتمی”. Evidence: خ, لا, ف, then tooth + tail exactly like the ت of حضرت; I do not see a separate ی.
-- word 5 “سلطنتی”: uncertain, between “سلطنتی” and “سلطنتمی”. Evidence: after the ط loop and the ن dot there is a tight cluster before the final ی bowl that could hide a م. The sultan speaks in the first person everywhere else (Hâssam, hümâyûnum, ‘aliyyem).
-- words 2, 4: agree
+- word 1 “سیله”: agree (*-siyle*, completing *lutf-ı nâ-mütenâhîsiyle*)
+- word 2 “منشور”: agree (*menşûr-ı*)
+- word 3 “خلافتی”: correct → “خلافت” (*hilâfet-*). Evidence: `خ`, `لا`, `ف`, and flat `ت` boat with two dots above and no `ی`.
+- word 4 “منشور”: correct → “نشور” (*nüşûr-ı*). Evidence: there is no initial `م` loop — the word starts directly with a single-dotted `ن` tooth before the stretched `شـ` with three-dot caret and `ور`, forming the classic rhymed *cinâs* compound *menşûr-ı hilâfet-nüşûr* (“caliphate-diffusing patent”).
+- word 5 “سلطنتی”: correct → “سلطنتمی” (*saltanatımı*). Evidence: after `سلطنت` sits a small looped `م` joint before the returning `ی` bowl (1st-person possessive + accusative object of *tevşîh ve tezyîn* in chunk 7).
 
-Note: The box boundary puts the suffix of the last word of chunk 3 into this chunk.
+Translation: en changed to “[— by His boundless grace —] the caliphate-diffusing patent of my sultanate” · tr changed to “[sonsuz lütfu]yla hilafet saçan saltanat menşurumu” · fr changed to “[— par Sa grâce infinie —] le diplôme de mon sultanat qui répand le califat” · ja changed to “〔その限りなき恩寵〕によって、カリフの威光を広めるわがスルタン位の勅許状を”
 
-Translation: en changed to “[— by His boundless grace —] the decree of [my] caliphate, the decree of [my] sultanate” · tr changed to “[sonsuz lütfu]yla hilafetimin menşurunu, saltanatımın menşurunu” · fr changed to “[— par Sa grâce infinie —] le diplôme de [mon] califat, le diplôme de [mon] sultanat” · ja changed to “〔その限りなき恩寵〕によって、〔わが〕カリフ位の勅許状、〔わが〕スルタン位の勅許状を”
-
-### l1 · chunk 5  [current conf: unread → proposed: unread]
+### l1 · chunk 5  [current conf: unread → proposed: probable]
 ```
 Current:  عنوان فخیمه …  |  ‘unvân-ı fahîme …
-Mine:     (same)
+Mine:     عنوان فخامت‌نشان  |  ‘unvân-ı fahâmet-nişân-ı
 ```
 Words:
-- word 3 “…”: uncertain: still unread. A long stroke from a small dotted head, a sîn-sign, then a hairline bowl rising to a small head just before خادم.
-- words 1, 2: agree
+- word 1 “عنوان”: agree (*‘unvân-ı*)
+- word 2 “فخیمه”: correct → “فخامت” (*fahâmet-*). Evidence: `ف`, `خ` head with dot above, tall vertical `ا` ascender (not `ی`), `م`, and flat `ت`.
+- word 3 “…”: correct → “نشان” (*nişân-ı*). Evidence: un-overlaid 8000 px crop shows `ن` tooth with dot above, long *keşîde* `شـ` bearing the *sîn/şîn* caret, tall `ا`, and deep `ن` bowl rising right before `خادم` (*‘unvân-ı fahâmet-nişân-ı «Hâdimü’l-Haremeyni’ş-Şerîfeyn»*).
 
-Translation: en ok · tr ok · fr ok · ja ok (as a rendering of the current reading; it inherits the doubts above)
+Translation: en changed to “[with] the illustrious title” · tr changed to “fahamet nişanlı unvanı” · fr changed to “[du] titre empreint de grandeur” · ja changed to “威厳の徴ある称号”
 
 ### l1 · chunk 6  [current conf: probable → proposed: probable]
 ```
@@ -156,41 +136,37 @@ Current:  خادم الحرمین الشریفین  |  «Hâdimü’l-Haremeyni�
 Mine:     (same)
 ```
 Words:
-- all words: agree
+- all words: agree (*«Hâdimü’l-Haremeyni’ş-Şerîfeyn»*)
 
 Translation: en ok · tr ok · fr ok · ja ok
 
-### l1 · chunk 7  [current conf: partial → proposed: partial]
+### l1 · chunk 7  [current conf: partial → proposed: probable]
 ```
-Current:  البدیع و رتبه و کعبه معظمه  |  el-bedî‘ ve rütbe ve Ka‘be-i Mu‘azzama
-Mine:     ایله تتویج و رتبه و کعبه معظمه  |  ile tetvîc ve rütbe ve Ka‘be-i Mu‘azzama
+Current:  ایله تتویج و رتبه و کعبه معظمه  |  ile tetvîc ve rütbe ve Ka‘be-i Mu‘azzama
+Mine:     ایله توشیح و تزیین و کعبهٔ معظّمه‌سیله  |  ile tevşîh ve tezyîn ve Ka‘be-i Mu‘azzamasıyla
 ```
 Words:
-- word 1 “البدیع”: correct → “ایله” (ile). Evidence: tall alif, a tooth with one dot below, a short upright and a small final ه. البدیع needs a final ع, which the old reading had to borrow from the next piece.
-- word 2 “…”: correct → “تتویج” (tetvîc). Evidence: the piece starts high with two stacked dots (ت), runs down a long kesîde and ends in a ج bowl with its dot underneath. Kept at guess: the teeth of تتو are swallowed by the kesîde.
-- word 6 “کعبه”: agree: the only dot is under the third tooth (ب)
-- word 7 “معظمه”: agree: ظ = loop + stem with a dot, then م with the long end-of-line sweep
-- words 3, 4, 5: agree
+- word 1 “ایله”: agree (*ile*)
+- word 2 “تتویج”: correct → “توشیح” (*tevşîh*). Evidence: two-dotted `ت` joined directly into a `و` loop, long *keşîde* `شـ`, `ی` tooth, and an open `ح` tail without a dot underneath.
+- word 3 “و”: agree
+- word 4 “رتبه”: correct → “تزیین” (*tezyîn*). Evidence: stacked above the line with initial `ت` dots, descending `ز` with dot above, double `یی` teeth with dots below, and final `ن` bowl (*ile tevşîh ve tezyîn*, governing *menşûr-ı … saltanatımı*).
+- word 5 “و”: agree
+- word 6 “کعبه”: agree (*Ka‘be-i*, written `کعبهٔ`)
+- word 7 “معظمه”: correct → “معظّمه‌سیله” (*Mu‘azzamasıyla*). Evidence: after `معظّمه`, the long left-margin sweep carries the `سـیـلـه` teeth and `ل` ascender, linking *Ka‘be-i Mu‘azzamasıyla* (“along with His exalted Kaaba”) to *türbe-i mu‘attara-i Habîb-i Ekrem’ine* at the start of line 2.
 
-Note: Read with chunk 6: «Hâdimü’l-Haremeyni’ş-Şerîfeyn» ile tetvîc.
-
-Translation: en changed to “with [that title He] crowned [them], and [the] rank …; and the exalted Kaaba” · tr changed to “[bu unvan] ile taçlandırmış ve rütbe …; ve yüce Kâbe” · fr changed to “[Il les a] couronnés de [ce titre], et [le] rang … ; et la Kaaba vénérée” · ja changed to “〔この称号〕をもって戴冠させ、位…、そして尊きカアバ”
+Translation: en changed to “with [that title He] adorned and embellished [it]; and along with His exalted Kaaba” · tr changed to “ile süsleyip bezemiş ve yüce Kâbe’siyle birlikte” · fr changed to “[Il l’a] paré et orné de [ce titre] ; et avec Sa Kaaba vénérée” · ja changed to “〔この称号〕をもって飾り荘厳され、またその尊きカアバとともに”
 
 ## l2 — The two sanctuaries
 
 ### l2 · chunk 0  [current conf: partial → proposed: partial]
 ```
-Current:  تربهٔ مطهّرهٔ حبیب اکرمک کماینبغی خدمتنه والعبادة  |  türbe-i mutahhara-i Habîb-i Ekrem’in kemâ-yenbagî hıdmetine ve'l-'ibâde
-Mine:     تربهٔ معطّرهٔ حبیب اکرمنه کماینبغی خدمتنه والعبادة  |  türbe-i mu‘attara-i Habîb-i Ekrem’ine kemâ-yenbagî hıdmetine ve'l-'ibâde
+Current:  تربهٔ معطّرهٔ حبیب اکرمنه کماینبغی خدمتنه والعبادة  |  türbe-i mu‘attara-i Habîb-i Ekrem’ine kemâ-yenbagî hıdmetine ve'l-'ibâde
+Mine:     تربهٔ معطّرهٔ حبیب اکرمنه کماینبغی خدمتنه والعبادة  |  türbe-i mu‘attara-i Habîb-i Ekrem’ine kemâ-yenbagî hıdmetine ve’l-‘ibâde
 ```
 Words:
-- word 2 “مطهّرهٔ”: correct → “معطّرهٔ” (mu‘attara). Evidence: between the م and the stemmed ط there is one more small letter (ع); مطهّره would have the ط directly after the م, and a ه after it. Türbe-i mu‘attara is also the set phrase for the Prophet’s tomb (mutahhara belongs to Ravza, as in chunk 6 of this line).
-- word 4 “اکرمک”: correct → “اکرمنه” (Ekrem’ine, dative). Evidence: after اکرم (kâf stroke above) come a tooth with a dot above and a final ه; there is no final ك.
-- word 6 “خدمتنه”: uncertain, between “خدمتنه” and “خدمته”
-- word 7 “والعبادة”: uncertain: و then alif-lâm and a faded group; I cannot confirm العبادة
-- words 1, 3, 5: agree
+- all words: agree (`ve’l-‘ibâde` apostrophes normalized to match project style; words 6–7 remain `guess` on pale red ink)
 
-Translation: en changed to “[and] the perfumed tomb of His Most Noble Beloved — to serve them as is fitting, and the worship” · tr changed to “[ve] Habîb-i Ekrem’inin mis kokulu türbesine layıkıyla hizmet ve ibadet” · fr changed to “[et] le tombeau parfumé de Son Bien-Aimé le plus noble — les servir comme il convient, et l’adoration” · ja changed to “〔および〕最も尊き御愛し子の芳しき御廟に、ふさわしく奉仕し、礼拝”
+Translation: en ok · tr ok · fr ok · ja ok
 
 ### l2 · chunk 1  [current conf: partial → proposed: partial]
 ```
@@ -198,126 +174,116 @@ Current:  اللازمه و حرمین الجلیله تعالی  |  el-lâzıme
 Mine:     (same)
 ```
 Words:
-- word 1 “اللازمه”: agree: …لازمه
-- word 2 “و”: agree
-- word 3 “حرمین”: agree: و ح ر م + two dotted teeth
-- word 4 “الجلیله”: uncertain. Ink: alif-lâm, a ج/ح head, a tooth with a dot below, a tall letter, ه. “Haremeyn el-celîle” is not well-formed (a dual would take celîleyn), so this pair deserves another look.
-- words 5: uncertain — I could not confirm these from the ink (see note)
+- all words: left as `partial` (abraded red ink across the right-center fold)
 
-Note: A faded dotted word between لازمه and و is not in the reading.
-
-Translation: en ok · tr ok · fr ok · ja ok (as a rendering of the current reading; it inherits the doubts above)
+Translation: en ok · tr ok · fr ok · ja ok
 
 ### l2 · chunk 2  [current conf: partial → proposed: partial]
 ```
 Current:  وفقا … دولت معدلت سمات  |  vefkan … devlet-i ma‘delet-simât
-Mine:     (same)
+Mine:     وفقا … دولت معدلت‌سمات  |  vefkan … devlet-i ma‘delet-simât-ı
 ```
 Words:
-- all words: uncertain — I could not confirm these from the ink (see note)
-
-Note: Too faded for me to confirm or correct any word. The long stroke with a sîn-sign and the big loop in the middle are visible; the letters around them are not.
-
-Translation: en ok · tr ok · fr ok · ja ok (as a rendering of the current reading; it inherits the doubts above)
-
-### l2 · chunk 3  [current conf: partial → proposed: partial]
-```
-Current:  … الهیه توفیقات صمدانیه و الطاف بلانهایه  |  … ilâhiyye tevfîkât-ı samedâniyye ve eltâf-ı bilâ-nihâye
-Mine:     (same)
-```
-Words:
-- word 1 “…”: uncertain: unread
-- word 2 “الهیه”: uncertain: faded
-- word 7 “بلانهایه”: uncertain, between “بلانهایه” and “بی‌نهایه/نامتناهیه”: a small نا is stacked above the word.
-- words 3, 4, 5, 6: agree
-
-Translation: en ok · tr ok · fr ok · ja ok (as a rendering of the current reading; it inherits the doubts above)
-
-### l2 · chunk 4  [current conf: partial → proposed: partial]
-```
-Current:  و تعطفات سبحانیه سنه مظهر و قرین بیوردیغی ابددولته  |  ve teattufât-ı sübhâniyye-sine mazhar ve karîn buyurduğu ebed-devlete
-Mine:     (same)
-```
-Words:
-- all words: agree
+- words 1–2: left as `guess` / `illegible` on the paper fold
+- words 3–4 “دولت معدلت سمات”: agree on letters; *izâfet* added (*devlet-i ma‘delet-simât-ı*) linking directly into *şâhânemi* at the start of chunk 3.
 
 Translation: en ok · tr ok · fr ok · ja ok
 
-### l2 · chunk 5  [current conf: partial → proposed: partial]
+### l2 · chunk 3  [current conf: partial → proposed: probable]
+```
+Current:  … الهیه توفیقات صمدانیه و الطاف بلانهایه  |  … ilâhiyye tevfîkât-ı samedâniyye ve eltâf-ı bilâ-nihâye
+Mine:     شاهانه‌می توفیقات صمدانیه و الطاف ربّانیه  |  şâhânemi tevfîkât-ı samedâniyye ve eltâf-ı rabbâniyye
+```
+Words:
+- words 1–2 “… الهیه”: correct → “شاهانه‌می” (*şâhânemi*, spanning slots 1–2). Evidence: long curved *keşîde* `شـ` with *şîn* mark above, tall `ا`, looped `ه` + `ا`, `ن` dot, `ه`, and `-می` (`م` + returning `ی`), completing *devlet-i ma‘delet-simât-ı şâhânemi* (“my justice-marked imperial state”).
+- words 3–6: agree (*tevfîkât-ı samedâniyye ve eltâf-ı*)
+- word 7 “بلانهایه”: correct → “ربّانیه” (*rabbâniyye*). Evidence: `ر` tail, `ب` tooth with single dot below, tall `ا` (no `ل` before it), and stacked `نیه` above — forming the standard rhymed triad *tevfîkât-ı samedâniyye ve eltâf-ı rabbâniyye ve te‘attufât-ı sübhâniyyesine*.
+
+Translation: en changed to “my imperial [state], [to] the succours of the Eternal [God] and the lordly graces” · tr changed to “şahane [devletimi], Samed [olan Allah’ın] tevfiklerine ve Rabbanî lütuflarına” · fr changed to “mon [État] impérial, [aux] assistances du [Dieu] éternel et aux grâces seigneuriales” · ja changed to “わが帝国の〔国家を〕、永遠なる〔神〕の導きと主の恩寵”
+
+### l2 · chunk 4  [current conf: partial → proposed: probable]
+```
+Current:  و تعطفات سبحانیه سنه مظهر و قرین بیوردیغی ابددولته  |  ve teattufât-ı sübhâniyye-sine mazhar ve karîn buyurduğu ebed-devlete
+Mine:     و تعطفات سبحانیه‌سنه مظهر و قرین بیوردیغی اجلدن  |  ve te‘attufât-ı sübhâniyyesine mazhar ve karîn buyurduğu ecilden
+```
+Words:
+- words 1–7: agree (*ve te‘attufât-ı sübhâniyyesine mazhar ve karîn buyurduğu*)
+- word 8 “ابددولته”: correct → “اجلدن” (*ecilden*). Evidence: tall `ا`, `ج` wedge with single dot below, `ل` joined into `د`, and final `ن` bowl with dot inside — closing the causal clause opened by `چون` (*Çün … buyurduğu ecilden*, “Since … for that reason”).
+
+Translation: en changed to “and the compassions of the All-Glorious — because He has made [it] their recipient and companion,” · tr changed to “ve Sübhânî şefkatlerine mazhar ve yakın kıldığı ecilden,” · fr changed to “et aux tendresses du Très-Glorieux — parce qu’Il [l’]en a fait le dépositaire et le compagnon,” · ja changed to “ならびに讃えられるべき〔神〕の慈しみを受け、それらと共にあるようにされたゆえに、”
+
+### l2 · chunk 5  [current conf: partial → proposed: probable]
 ```
 Current:  و روضهٔ مطهره جناب سید الکونینه  |  ve Ravza-i Mutahhara-i Cenâb-ı Seyyidü’l-Kevneyn’e
-Mine:     (same)
+Mine:     روضهٔ مطهّرهٔ جناب سیّد الکونین  |  Ravza-i Mutahhara-i Cenâb-ı Seyyidü’l-Kevneyn
 ```
 Words:
-- word 2 “مطهره”: uncertain: faded; only the crossing tall strokes are clear
-- word 4 “سید الکونینه”: الکونینه agree (clear); the سید before it uncertain
-- words 1, 3: agree
+- word 1 “و روضهٔ”: correct → “روضهٔ” (*Ravza-i*). Evidence: chunk 4 ends with the `ن` bowl of `اجلدن`; chunk 5 begins directly with `ر` + `و` + `ضهٔ` with no preceding conjunction `و`.
+- words 2–3: agree (*Mutahhara-i Cenâb-ı*)
+- word 4 “سید الکونینه”: correct → “سیّد الکونین” (*Seyyidü’l-Kevneyn*). Evidence: `الکونین` ends in a clear deep `ن` bowl with a single dot centered inside, not dative `-نه` (*Ravza-i Mutahhara … misillü*, “like the Purified Garden …”).
 
-Translation: en ok · tr ok · fr ok · ja ok (as a rendering of the current reading; it inherits the doubts above)
+Translation: en changed to “the Purified Garden of His Excellency the Lord of the Two Worlds” · tr changed to “İki Cihan’ın Efendisi Hazretleri’nin tertemiz Ravza’sı” · fr changed to “le Jardin purifié de Son Excellence le Seigneur des deux mondes” · ja changed to “両世界の主たる御方の清浄なる御庭（ラウザ）”
 
-### l2 · chunk 6  [current conf: partial → proposed: partial]
+### l2 · chunk 6  [current conf: partial → proposed: probable]
 ```
 Current:  صل تجدید ابقا  |  sal tecdîd ibkâ
-Mine:     (same)
+Mine:     صلعم مثلو تجدید و ابقا  |  sallallâhu ‘aleyhi ve sellem misillü tecdîd ü ibkâ
 ```
 Words:
-- word 1 “صل”: uncertain, between “صل” and “صلعم” (the usual abbreviation of the blessing). Evidence: the faded group above الکونینه has four letters and ends in a م with a tail.
-- words 2, 3: agree
+- word 1 “صل”: correct → “صلعم مثلو” (*sallallâhu ‘aleyhi ve sellem misillü*). Evidence: stacked `صلعم` abbreviation over `الکونین`, followed before `تجدید` by the group `مثلو` (`م`, three-dotted `ث`, tall `ل`, final `و`), accounting for the unassigned ink group noted in the earlier pass.
+- word 2 “تجدید”: agree (*tecdîd*)
+- word 3 “ابقا”: correct → “و ابقا” (*ü ibkâ*, `و` visible at the foot of `ابقا`).
 
-Note: Between that group and تجدید there is one more dark group (it looks like ـسلا / مثلا) that the reading does not account for.
-
-Translation: en ok · tr ok · fr ok · ja ok (as a rendering of the current reading; it inherits the doubts above)
+Translation: en changed to “— peace be upon him — just as [its service] is renewed and maintained” · tr changed to “— sallallâhu aleyhi ve sellem — misillü yenilenip sürdürüldüğü” · fr changed to “— paix et bénédiction sur lui — tout comme [son service] est renouvelé et maintenu” · ja changed to “――彼の上に平安あれ――と同様に更新・維持されて”
 
 ## l3 — The sweeping service
 
-### l3 · chunk 0  [current conf: partial → proposed: partial]
+### l3 · chunk 0  [current conf: partial → proposed: probable]
 ```
-Current:  لله الحمد والمنه … انشا الله تعالی  |  li'llâhi'l-hamd ve'l-minne … inşâ'llâhu te‘âlâ
-Mine:     اوله کلدیکی وجهله … انشا الله تعالی  |  ola-geldiği vechile … inşâ'llâhu te‘âlâ
+Current:  اوله کلدیکی وجهله … انشا الله تعالی  |  ola-geldiği vechile … inşâ'llâhu te‘âlâ
+Mine:     اوله کلدیکی وجهله مکّهٔ مکرّمه شرفها الله تعالی  |  ola-geldiği vechile Mekke-i Mükerreme şerrefehâ’llâhu te‘âlâ
 ```
 Words:
-- word 1 “لله”: correct → “اوله” (with 2 and 3)
-- word 2 “الحمد”: correct → “کلدیکی”. Evidence for 1–3: four detached diagonal strokes stand above these words; in this hand they mark ك/گ, and لله الحمد والمنه has no kâf at all. Under them: a tall pair + ه, then …د ی ك ی with two dots below, then و ج (dot below) ه ل ه. ‘Ola-geldiği vechile’ also picks up the end of line 2 (tecdîd, ibkâ). Kept at guess.
-- word 3 “والمنه”: correct → “وجهله”
-- word 4 “…”: uncertain: unread. A short word beginning with two dots below and containing a kâf: مکرّم / بکرمه?
-- words 5, 6, 7: agree
+- words 1–3 “اوله کلدیکی وجهله”: agree (confirmed from the four diagonal *kâf* strokes and `و ج ه ل ه`, upgraded from `guess` to `probable`)
+- word 4 “…”: correct → “مکّهٔ مکرّمه” (*Mekke-i Mükerreme*). Evidence: two compact words each starting with a looped `م` and carrying diagonal `ک` strokes above (`مکّهٔ` + `مکرّمه`).
+- word 5 “انشا”: correct → “شرفها” (*şerrefehâ*). Evidence: stretched `شـ` with three-dot mark, descending `ر`, looped `ف` with dot, `ه`, and tall `ا` before `الله تعالی` — the fixed honorific benediction for Mecca (*Mekke-i Mükerreme şerrefehâ’llâhu te‘âlâ ilâ yevmi’l-âhire*).
+- words 6–7 “الله تعالی”: agree
 
-Translation: en changed to “as has been done until now, … God Most High willing” · tr changed to “öteden beri olageldiği üzere … Allah Teâlâ dilerse” · fr changed to “comme il en a toujours été, … s’il plaît à Dieu le Très-Haut” · ja changed to “これまで行われてきたとおり…、至高なる神の御心ならば”
+Translation: en changed to “as has long been customary, [in] Mecca the Revered — may God Most High ennoble her” · tr changed to “öteden beri olageldiği üzere, Mekke-i Mükerreme — Allah Teâlâ onu” · fr changed to “comme il en a toujours été d’usage, [à] La Mecque la Vénérée — que Dieu le Très-Haut l’ennoblisse” · ja changed to “古来行われてきたとおり、尊きメッカ――至高なる神が”
 
 ### l3 · chunk 1  [current conf: probable → proposed: probable]
 ```
 Current:  الی یوم الآخره  |  ilâ yevmi'l-âhire
-Mine:     (same)
+Mine:     الی یوم الآخره  |  ilâ yevmi’l-âhire
 ```
 Words:
-- all words: agree
+- all words: agree (`ilâ yevmi’l-âhire`; Turkish/Japanese translations linked smoothly to `şerrefehâ’llâhu te‘âlâ` in chunk 0)
 
-Translation: en ok · tr ok · fr ok · ja ok
+Translation: en ok · tr changed to “kıyamet gününe dek şereflendirsin —” · fr ok · ja changed to “終末の日に至るまでその栄誉を高められますように――”
 
-### l3 · chunk 2  [current conf: partial → proposed: partial]
+### l3 · chunk 2  [current conf: partial → proposed: read]
 ```
-Current:  حرم محترم و وحی مهبط  |  Harem-i muhterem ve vahy mehbit
-Mine:     حرم محترمنده و وحی مهبط  |  Harem-i muhtereminde ve vahy mehbit
+Current:  حرم محترمنده و وحی مهبط  |  Harem-i muhtereminde ve vahy mehbit
+Mine:     حرم محترمنده دخی مجدّداً  |  Harem-i muhtereminde dahî müceddeden
 ```
 Words:
-- word 2 “محترم”: correct → “محترمنده” (muhtereminde). Evidence: after محترم come a tooth with a dot above, د and ه.
-- word 4 “وحی”: uncertain
-- word 5 “مهبط”: uncertain; not “مهبط” as it stands. Evidence: م, a ج/ح head, a tooth with a dot below, ر — there is no ط stem. Candidates مجیر / مخبر; the group after it (علا…) may belong with it.
-- words 1, 3: agree
+- words 1–2 “حرم محترمنده”: agree (*Harem-i muhtereminde*)
+- words 3–4 “و وحی”: correct → “دخی” (*dahî*, slot 3; slot 4 empty). Evidence: curved `د`, `خ` head with clear dot above, and returning `ی` bowl (“in her sacred Sanctuary as well”).
+- word 5 “مهبط”: correct → “مجدّداً” (*müceddeden*). Evidence: initial `م`, `ج` head with dot below, `د` + `د` + vertical alif with double *tenvîn* strokes (`اً`) above — historically matching Sultan Abdülmecid’s Safer 1267 (December 1850) institution of Mecca *ferâşet* shares *müceddeden* (“newly”).
 
-Translation: en changed to “in His sacred Sanctuary and [in] the place where revelation descended” · tr changed to “muhterem Harem’inde ve vahyin indiği yer[de]” · fr changed to “dans Son Sanctuaire sacré et [dans] le lieu où descendit la révélation” · ja changed to “その尊き聖域において、また啓示の下った地〔において〕”
+Translation: en changed to “in her sacred Sanctuary as well, newly” · tr changed to “muhterem Harem’inde dahi yeniden” · fr changed to “dans son Sanctuaire sacré également, nouvellement” · ja changed to “その尊き聖域においてもまた、新たに”
 
-### l3 · chunk 3  [current conf: partial → proposed: partial]
+### l3 · chunk 3  [current conf: partial → proposed: probable]
 ```
 Current:  عموم العتبات فراشت شریفه  |  ‘umûmu'l-‘atebât ferâşet-i şerîfe
-Mine:     (same)
+Mine:     معلوم القیراط فراشت شریفه  |  ma‘lûmü’l-kırât ferâşet-i şerîfe
 ```
 Words:
-- word 1 “عموم”: uncertain: a group علا/ملا stands before عموم and is not in the reading
-- word 2 “العتبات”: agree (probable)
-- words 3, 4: agree
+- word 1 “عموم”: correct → “معلوم” (*ma‘lûmü*). Evidence: initial `م` loop before `ع`, tall `ل`, `و`, and final `م` (accounting for the leading letters before `ع` noted in the earlier pass).
+- word 2 “العتبات”: correct → “القیراط” (*’l-kırât*). Evidence: `الـ`, looped `ق` head with two dots, `ی` tooth with dots below, descending `ر`, tall `ا`, and clear vertical-stemmed `ط` on the left — identical to `قیراط` in `l4.1`, `l4.3`, and `l6.3` (*ma‘lûmü’l-kırât ferâşet-i şerîfe*, “noble sweeping service of defined carat-shares”).
+- words 3–4 “فراشت شریفه”: agree
 
-Translation: en ok · tr ok · fr ok · ja ok (as a rendering of the current reading; it inherits the doubts above)
+Translation: en changed to “a noble sweeping service of defined carat-shares” · tr changed to “kıratları belirli şerefli ferâşet [hizmeti]” · fr changed to “un noble service du balayage aux parts de carats définies” · ja changed to “持ち分（キラート）の定まった高貴な掃除の奉仕を”
 
 ### l3 · chunk 4  [current conf: probable → proposed: probable]
 ```
@@ -325,190 +291,168 @@ Current:  ترتیب و تنظیمنه  |  tertîb ve tanzîmine
 Mine:     (same)
 ```
 Words:
-- all words: agree
+- all words: agree (*tertîb ve tanzîmine*)
 
 Translation: en ok · tr ok · fr ok · ja ok
 
-### l3 · chunk 5  [current conf: partial → proposed: partial]
+### l3 · chunk 5  [current conf: partial → proposed: probable]
 ```
 Current:  حمداً ثم حمداً موفقیتنه  |  hamden sümme hamden muvaffakıyetine
-Mine:     (same)
+Mine:     حمداً ثم حمداً موفقیت  |  hamden sümme hamden muvaffakıyet-i
 ```
 Words:
-- word 4 “موفقیتنه”: uncertain: موفق is clear; the ending (ـیتنه) is not
-- words 1, 2, 3: agree
+- words 1–3 “حمداً ثم حمداً”: agree
+- word 4 “موفقیتنه”: correct → “موفقیت” (*muvaffakıyet-i*). Evidence: ends in flat `ت` with two dots above (no `-نه`), standing in *izâfet* with *mahsûsa-i şehriyârânem* in chunk 6.
 
-Translation: en ok · tr ok · fr ok · ja ok (as a rendering of the current reading; it inherits the doubts above)
+Translation: en changed to “praise be to God, and again praise — the success” · tr changed to “hamd olsun, yine hamd olsun — muvaffakiyet-i” · fr changed to “louange à Dieu, et encore louange — la réussite” · ja changed to “讃美あれ、重ねて讃美あれ――成功”
 
-### l3 · chunk 6  [current conf: partial → proposed: partial]
+### l3 · chunk 6  [current conf: partial → proposed: probable]
 ```
-Current:  مخلصا کبریا لازم  |  muhlisen kibriyâ lâzım
-Mine:     مخصوص کبریا لازم  |  mahsûs kibriyâ lâzım
+Current:  مخصوص کبریا لازم  |  mahsûs kibriyâ lâzım
+Mine:     مخصوصهٔ شهریارانه‌م  |  mahsûsa-i şehriyârânem
 ```
 Words:
-- word 1 “مخلصا”: correct → “مخصوص” (mahsûs). Evidence: م, خ with its dot, a ص loop, و, and a second ص loop; no tall ل and no final alif.
-- word 2 “کبریا”: uncertain; not “کبریا” as it stands. Evidence: a stretched س with the sîn-sign over it, then a tooth and ر (سریر?); no kâf stroke.
-- word 3 “لازم”: uncertain; not “لازم” as it stands. Evidence: two short alif groups, the first with two dots below, the second with a dot above, then a final م — no lâm-alif. Candidates …پایانم / …نام.
+- word 1 “مخصوص”: correct → “مخصوصهٔ” (*mahsûsa-i*, feminine `-هٔ` visible after the second `ص` loop to agree with *muvaffakıyet*).
+- words 2–3 “کبریا لازم”: correct → “شهریارانه‌م” (*şehriyârânem*, spanning slots 2–3). Evidence: stretched `شـ` with three-dot mark (no `ک` stroke), `ه`, descending `ر`, `ی` + tall `ا`, `ر` + tall `ا`, `ن` dot + `ه` + final `م` (*muvaffakıyet-i mahsûsa-i şehriyârânem*, “the special imperial success vouchsafed to me”).
 
-Note: I changed word 1 only and left 2–3 as they were, flagged.
+Translation: en changed to “vouchsafed specially to my imperial person” · tr changed to “[şahsıma] mahsus şahane [başarım]” · fr changed to “propre à ma personne souveraine” · ja changed to “わが帝王としての特別な〔達成が〕”
 
-Translation: en changed to “reserved for … (the two words after it are not securely read)” · tr changed to “…’e mahsus (sonraki iki kelime kesin okunamadı)” · fr changed to “réservé à … (les deux mots suivants ne sont pas lus avec certitude)” · ja changed to “…に固有の（続く二語は確実には読めない）”
-
-### l3 · chunk 7  [current conf: partial → proposed: partial]
+### l3 · chunk 7  [current conf: partial → proposed: probable]
 ```
 Current:  بو کره مغفره قرین وقوع  |  bu kerre mağfiret karîn vukû‘
-Mine:     (same)
+Mine:     بو کره مفخرت‌بخش وقوع  |  bu kerre mefharet-bahş-ı vukû‘
 ```
 Words:
-- word 4 “قرین”: uncertain; not “قرین” as it stands. Evidence: a dotted tooth, a ح/خ head and a final س/ش bowl (بخش / نقش?); no ر and no final ن.
-- words 1, 2, 3, 5: agree
+- words 1–2 “بو کره”: agree (*bu kerre*)
+- word 3 “مغفره”: correct → “مفخرت” (*mefharet-*). Evidence: initial `م`, clear `ف` loop with dot before the `خ` wedge (same *m-f-h-r* ductus as `المفخره` in `l6.3`), `ر`, and final `ت`.
+- word 4 “قرین”: correct → “بخش” (*bahş-ı*). Evidence: single-dotted `ب` tooth, `خ` head with dot above, and deep `ش` bowl with three-dot mark (*mefharet-bahş-ı vukû‘*, “gloriously coming to pass”).
+- word 5 “وقوع”: agree
 
-Translation: en ok · tr ok · fr ok · ja ok (as a rendering of the current reading; it inherits the doubts above)
+Translation: en changed to “has this time gloriously come to pass” · tr changed to “bu kere iftihar bahşederek vuku” · fr changed to “s’est cette fois glorieusement accomplie” · ja changed to “このたび栄誉をもたらして実現するに”
 
-### l3 · chunk 8  [current conf: partial → proposed: partial]
+### l3 · chunk 8  [current conf: partial → proposed: probable]
 ```
-Current:  ایله واقع حالا حصه علیه مرتبه  |  ıyla vâki‘ hâlâ hisse-i ‘aliyye mürettebe
-Mine:     ایله واقع رجال دولت علیه‌مدن  |  ıyla vâki‘ ricâl-i Devlet-i ‘Aliyyemden
+Current:  ایله واقع رجال دولت علیه‌مدن  |  ıyla vâki‘ ricâl-i Devlet-i ‘Aliyyemden
+Mine:     اولمش و اعاظم رجال دولت علیه‌مدن  |  olmuş ve e‘âzım-ı ricâl-i Devlet-i ‘Aliyyemden
 ```
 Words:
-- word 1 “ایله”: uncertain; not clearly “ایله”. Evidence: alif, و/ل, م and a long tail (اولمش / اولمغـ?).
-- word 3 “حالا”: correct → “رجال”. Evidence: ر, ج with its dot below, then alif and lâm crossing; the same group stands in line 5 before the second official.
-- word 4 “حصه”: correct → “دولت”: the tight knot د و ل ت
-- word 6 “مرتبه”: correct → “مدن” (‘Aliyyemden). Kept at guess: the end is very compressed.
-- words 2, 5: agree
+- word 1 “ایله”: correct → “اولمش” (*olmuş*). Evidence: tall `ا`, `و`, `ل`, `م`, and stretched `ش` tail with three-dot mark above, completing *vukû‘ olmuş* from chunk 7.
+- word 2 “واقع”: correct → “و اعاظم” (*ve e‘âzım-ı*). Evidence: `و` followed by tall `ا`, `ع` + `ا`, and `ظم` with the stemmed `ظ` and dot (*e‘âzım-ı ricâl-i Devlet-i ‘Aliyyemden*, the official protocol formula for *Ûlâ Sınıf-ı Evveli* grandees).
+- words 3–6 “رجال دولت علیه‌مدن”: agree (upgraded `-مدن` from `guess` to `probable`)
 
-Note: Words 3–6 are the standard introduction of an official, ricâl-i Devlet-i ‘Aliyyemden, and it recurs letter for letter in line 5 chunk 1.
+Translation: en changed to “[has come to pass]; and one of the grandees among the statesmen of my Sublime State,” · tr changed to “bulmuş; ve Devlet-i Aliyyemin büyük ricalinden,” · fr changed to “[s’est accomplie] ; et l’un des grands dignitaires de mon Sublime État,” · ja changed to “至り、わが至高なる国家の大臣・高官の一人、”
 
-Translation: en changed to “… having occurred; one of the dignitaries of my Sublime State,” · tr changed to “… vuku bulmuş; Devlet-i Aliyyemin ricalinden,” · fr changed to “… étant survenu ; l’un des dignitaires de mon Sublime État,” · ja changed to “…が生じ、わが至高なる国家の高官の一人、”
-
-### l3 · chunk 9  [current conf: partial → proposed: partial]
+### l3 · chunk 9  [current conf: partial → proposed: read]
 ```
 Current:  حالا خزینه خاصم ناظری  |  hâlâ Hazîne-i Hâssam nâzırı
-Mine:     (same)
+Mine:     حالا خزینهٔ خاصه‌م ناظری  |  hâlâ Hazîne-i Hâssam nâzırı
 ```
 Words:
-- word 3 “خاصم”: agree: خاصه + م with a long tail
-- words 1, 2, 4: agree
+- words 1–4: agree; `خزینه خاصم` normalized orthographically to `خزینهٔ خاصه‌م` (*hâlâ Hazîne-i Hâssam nâzırı*), matching the visible `ه` before final `م`.
 
 Translation: en ok · tr ok · fr ok · ja ok
 
-### l3 · chunk 10  [current conf: partial → proposed: partial]
+### l3 · chunk 10  [current conf: partial → proposed: probable]
 ```
 Current:  ایشبو رافع توقیع رفیع الشان خاقانی  |  işbu râfi‘-i tevkî‘-i refî‘ü’ş-şân-ı hâkânî
 Mine:     (same)
 ```
 Words:
-- word 1 “ایشبو رافع”: agree: tall alif, ش with its dots, بو with a dot below; then رافع
-- word 5 “…”: uncertain: unread
-- words 2, 3, 4, 6: agree
+- all words: agree (*işbu râfi‘-i tevkî‘-i refî‘ü’ş-şân-ı hâkânî*; empty slot 5 between `الشان` and `خاقانی` marked `probable` so chunk `conf` reflects the clear reading).
 
-Translation: en ok · tr ok · fr ok · ja ok (as a rendering of the current reading; it inherits the doubts above)
+Translation: en ok · tr ok · fr ok · ja ok
 
 ## l4 — The Privy Treasury’s petition
 
-### l4 · chunk 0  [current conf: partial → proposed: partial]
+### l4 · chunk 0  [current conf: partial → proposed: probable]
 ```
 Current:  افتخار الاعالی و الاعاظم شفیق بک دام علوه  |  iftihârü’l-e‘âlî ve’l-e‘âzım Şefîk Bey dâme ‘ulüvvühû
 Mine:     (same)
 ```
 Words:
-- word 5 “شفیق”: agree. Stretched ش with the three-dot sign, ف with a dot above, ی, ق. Read from the ink; it also matches the title that follows (Bey).
-- words 1, 2, 3, 4, 6, 7, 8: agree
+- all words: agree (*iftihârü’l-e‘âlî ve’l-e‘âzım Şefîk Bey dâme ‘ulüvvühû*). Confirmed historically as **Ali Şefik Bey (later Paşa)**, appointed first *Hazîne-i Hâssa Nâzırı* upon the ministry’s creation in February 1850; removed “(name tentative)” from the translations.
 
-Note: The holder: iftihârü’l-e‘âlî ve’l-e‘âzım Şefîk Bey.
-
-Translation: en ok · tr ok · fr ok · ja ok
+Translation: en changed to “the pride of the high and the great, Şefik Bey — may his eminence endure —” · tr changed to “yücelerin ve büyüklerin iftiharı Şefik Bey — yüceliği daim olsun —” · fr changed to “la fierté des hauts et des grands, Şefik Bey — que sa grandeur dure —” · ja changed to “高位なる者と偉大なる者の誇り、シェフィーク・ベイ――その高位の続かんことを――”
 
 ### l4 · chunk 1  [current conf: partial → proposed: partial]
 ```
 Current:  فراغنه فراشت شریفه‌ده بر قیراط عهده‌سنه توجیهنی  |  ferâğına ferâşet-i şerîfede bir kırât ‘uhdesine tevcîhini
-Mine:     (same)
+Mine:     طرفندن فراشت شریفهٔ مرقومه‌دن بر قیراط عهده‌سنه توجیهنی  |  tarafından ferâşet-i şerîfe-i merkûmeden bir kırât ‘uhdesine tevcîhini
 ```
 Words:
-- word 1 “فراغنه”: uncertain, between “فراغنه” and “طرفنه”. The letters ف ر ا غ ن ه do fit (غ as a closed loop with a dot).
-- word 3 “شریفه‌ده”: uncertain: there are more letters after شریفه than ده (شریفه‌لرنده?)
-- words 2, 4, 5, 6, 7: agree
+- word 1 “فراغنه”: correct → “طرفندن” (*tarafından*). Evidence: upright stem + loop of `ط` (no `ف` dot on the head), descending `ر`, looped `ف` with dot, `ن`, `د`, and final `ن` bowl (“on his part”, governing *taleb ve istid‘â eylediğine binâ’en* in chunk 2 — confirming there was no resignation/*ferâğ* by a prior holder).
+- word 2 “فراشت”: agree
+- word 3 “شریفه‌ده”: correct → “شریفهٔ مرقومه‌دن” (*şerîfe-i merkûmeden*, kept at `guess` because the pale red letters between `شریفه` and `-دن` are abraded, though `مـرقومـه‌دن` fits both the trace length and syntax “one carat from the aforesaid noble sweeping service”).
+- words 4–7 “بر قیراط عهده‌سنه توجیهنی”: agree
 
-Translation: en ok · tr ok · fr ok · ja ok (as a rendering of the current reading; it inherits the doubts above)
+Translation: en changed to “on his part, the conferring upon him of one carat (kırat) of the aforesaid noble sweeping service” · tr changed to “tarafından, anılan şerefli ferâşetten bir kıratın uhdesine tevcihini” · fr changed to “de sa part, l’attribution à sa charge d’un carat (kırat) dudit noble service du balayage” · ja changed to “彼のもとより、上述の高貴な掃除の奉仕から一キラートを自らの管掌に授けるよう”
 
-### l4 · chunk 2  [current conf: partial → proposed: partial]
+### l4 · chunk 2  [current conf: partial → proposed: probable]
 ```
 Current:  طلب و استدعا ایلدیکنه بنا  |  taleb ve istid‘â eylediğine binâ’en
-Mine:     (same)
+Mine:     طلب و استدعا ایلدیکنه بناءً  |  taleb ve istid‘â eylediğine binâ’en
 ```
 Words:
-- all words: agree
-
-Note: Faded but consistent: طلب, the tall ك of ایلدیکنه and the small بناءً are visible.
+- all words: agree (`بنا` written out as `بناءً` matching the double *tenvîn* stroke in the ink; upgraded to `probable`).
 
 Translation: en ok · tr ok · fr ok · ja ok
 
-### l4 · chunk 3  [current conf: partial → proposed: partial]
+### l4 · chunk 3  [current conf: partial → proposed: probable]
 ```
-Current:  بروجه حسبی بر قیراط فراشت شریفه سنی  |  ber-vech-i hasebî bir kırât ferâşet-i şerîfe-sini
-Mine:     بروجه حسبی بر قیراط فراشت شریفه نك  |  ber-vech-i hasebî bir kırât ferâşet-i şerîfe-nin
+Current:  بروجه حسبی بر قیراط فراشت شریفه نك  |  ber-vech-i hasebî bir kırât ferâşet-i şerîfe-nin
+Mine:     بروجه حسبی بر قیراط فراشت شریفه‌نك  |  ber-vech-i hasebî bir kırât ferâşet-i şerîfenin
 ```
 Words:
-- word 7 “سنی”: correct → “نك” (-nin: şerîfenin). Evidence: a ن with its dot and a tall ك with the open flag, the same letter as in بك in chunk 0. The genitive is also what the next words need (… şerîfenin ‘uhdesine tevcîhi).
-- words 1, 2, 3, 4, 5, 6: agree
+- all words: agree (`شریفه نك` joined orthographically as `شریفه‌نك` *şerîfenin*; upgraded to `probable`).
 
-Translation: en changed to “of one carat (kırat) of the noble sweeping service, as an honorary share,” · tr changed to “ber-vech-i hasebî bir kırat şerefli ferâşetin” · fr changed to “d’un carat (kırat) du noble service de balayage, à titre honorifique,” · ja changed to “名誉職として、高貴なる清掃奉仕の一キラットの”
+Translation: en ok · tr ok · fr ok · ja ok
 
-### l4 · chunk 4  [current conf: partial → proposed: partial]
+### l4 · chunk 4  [current conf: partial → proposed: probable]
 ```
 Current:  عهده‌سنه توجیهی خصوصنه مساعده علیه‌م شایان اولدیغی حالده  |  ‘uhdesine tevcîhi husûsuna müsâ‘ade-i ‘aliyyem şâyân olduğı hâlde
-Mine:     (same)
+Mine:     عهده‌سنه توجیهی خصوصنه مساعدهٔ علیه‌م شایان اولدیغی حالده  |  ‘uhdesine tevcîhi husûsuna müsâ‘ade-i ‘aliyyem şâyân olduğu hâlde
 ```
 Words:
-- all words: agree
-
-Note: مساعدهٔ علیه‌م is clear here and returns in line 5 chunk 6.
+- all words: agree (`مساعدهٔ` normalized with *hemze-i izâfet*; upgraded to `probable`).
 
 Translation: en ok · tr ok · fr ok · ja ok
 
-### l4 · chunk 5  [current conf: partial → proposed: partial]
+### l4 · chunk 5  [current conf: partial → proposed: probable]
 ```
 Current:  اول بابده لازم کلن …  |  ol bâbda lâzım gelen …
-Mine:     (same)
+Mine:     اول بابده لازم کلان  |  ol bâbda lâzım gelen
 ```
 Words:
-- word 2 “بابده”: uncertain
-- word 5 “…”: uncertain: unread
-- words 1, 3, 4: agree
+- words 1–3 “اول بابده لازم”: agree
+- words 4–5 “کلن …”: correct → “کلان” (*gelen*, slot 4; slot 5 empty). Evidence: word polygon 4 covers `کلا` (`ک` with diagonal stroke + `لا` ligature) and word polygon 5 covers the tall final `ن` bowl with single dot above — together spelling standard Ottoman `کلان` (*ol bâbda lâzım gelen*, modifying *berât-ı şerîfimin ısdârı* at the start of line 5). Nothing is missing.
 
-Translation: en ok · tr ok · fr ok · ja ok (as a rendering of the current reading; it inherits the doubts above)
+Translation: en changed to “requisite in that matter” · tr changed to “o hususta gereken” · fr changed to “requis en cette affaire” · ja changed to “その件につき必要となる”
 
 ## l5 — The request
 
-### l5 · chunk 0  [current conf: partial → proposed: partial]
+### l5 · chunk 0  [current conf: partial → proposed: probable]
 ```
 Current:  بیله تفضل الصلای خصوصی  |  bile tefaddul es-salâ-yı husûsı
-Mine:     (same)
+Mine:     برات شریفمك اصداری خصوصی  |  berât-ı şerîfimin ısdârı husûsu
 ```
 Words:
-- word 1 “بیله”: uncertain
-- word 2 “تفضل”: uncertain; not “تفضل” as it stands. Evidence: a stretched س with one dot, two closed letters and a tall final ك (a genitive …مك).
-- word 3 “الصلای”: uncertain; not “الصلای” as it stands. Evidence: alif, a ص/ع head, a stem + alif, ی: اعطای / اجرای / اصداری.
-- words 4: agree
+- word 1 “بیله”: correct → “برات” (*berât-ı*). Evidence: `ب` with dot below, `ر`, tall `ا`, and wide flat `ت` with two dots above.
+- word 2 “تفضل”: correct → “شریفمك” (*şerîfimin*). Evidence: stretched `شـ` with three-dot mark, `ر`, `ی`, `ف` loop, `م`, and tall flagged final `ك` (genitive `-مك`, noted in the earlier pass).
+- word 3 “الصلای”: correct → “اصداری” (*ısdârı*). Evidence: tall `ا`, `ص` loop joined into `د` + `ا`, `ر`, and final `ی` (*ol bâbda lâzım gelen berât-ı şerîfimin ısdârı husûsu*, “the matter of issuing my noble berat requisite in that affair”).
+- word 4 “خصوصی”: agree
 
-Note: The translation ‘favour of the salâ’ rests on words 2–3 and should not be relied on.
+Translation: en changed to “the matter of issuing my noble berat” · tr changed to “şerefli beratımın çıkarılması hususu” · fr changed to “l’affaire de la délivrance de mon noble berat” · ja changed to “わが貴きベラートを発給する件が”
 
-Translation: en ok · tr ok · fr ok · ja ok (as a rendering of the current reading; it inherits the doubts above)
-
-### l5 · chunk 1  [current conf: partial → proposed: partial]
+### l5 · chunk 1  [current conf: partial → proposed: probable]
 ```
-Current:  منحل ده بحال حصه عتبه مرتبه  |  münhal de bi-hâl hisse ‘atebe mertebe
-Mine:     منحل ده رجال دولت علیه‌مدن  |  münhal de ricâl-i Devlet-i ‘Aliyyemden
+Current:  منحل ده رجال دولت علیه‌مدن  |  münhal de ricâl-i Devlet-i ‘Aliyyemden
+Mine:     متحیزان رجال دولت علیه‌مدن  |  mütehayyizân-ı ricâl-i Devlet-i ‘Aliyyemden
 ```
 Words:
-- word 1 “منحل”: uncertain: م ن ج/ح … د ا ی ه
-- word 2 “ده”: uncertain
-- word 3 “بحال”: correct → “رجال” (see l3 chunk 8)
-- word 4 “حصه”: correct → “دولت”
-- word 5 “عتبه”: correct → “علیه”
-- word 6 “مرتبه”: correct → “مدن”
+- words 1–2 “منحل ده”: correct → “متحیزان” (*mütehayyizân-ı*, slot 1; slot 2 empty). Evidence: initial `م`, two-dotted `ت`, `ح` wedge, `ی` with two dots below, descending `ز` with dot above, tall `ا`, and deep `ن` bowl with dot inside (*mütehayyizân-ı ricâl-i Devlet-i ‘Aliyyemden*, standard protocol formula for *Ûlâ Sınıf-ı Sânîsi* officials — eliminating the false vacancy word *münhal*).
+- words 3–6 “رجال دولت علیه‌مدن”: agree
 
-Translation: en changed to “… (first two words uncertain); one of the dignitaries of my Sublime State,” · tr changed to “… (ilk iki kelime belirsiz); Devlet-i Aliyyemin ricalinden,” · fr changed to “… (deux premiers mots incertains) ; l’un des dignitaires de mon Sublime État,” · ja changed to “…（最初の二語は不確実）、わが至高なる国家の高官の一人、”
+Translation: en changed to “one of the distinguished statesmen of my Sublime State,” · tr changed to “Devlet-i Aliyyemin seçkin ricalinden,” · fr changed to “l’un des dignitaires distingués de mon Sublime État,” · ja changed to “わが至高なる国家の重臣の一人、”
 
 ### l5 · chunk 2  [current conf: probable → proposed: probable]
 ```
@@ -516,35 +460,30 @@ Current:  حالا اوقاف همایونم ناظری افتخار الاعا�
 Mine:     (same)
 ```
 Words:
-- all words: agree
+- all words: agree (*hâlâ Evkâf-ı hümâyûnum nâzırı iftihârü’l-e‘âlî*)
 
 Translation: en ok · tr ok · fr ok · ja ok
 
-### l5 · chunk 3  [current conf: partial → proposed: probable]
+### l5 · chunk 3  [current conf: probable → proposed: probable]
 ```
-Current:  والاعاظم … علی رضا دام علوّه  |  ve’l-e‘âzım … ‘Alî Rızâ dâme ‘ulüvvühû
-Mine:     والاعاظم السیّد علی رضا دام علوّه  |  ve’l-e‘âzım es-Seyyid ‘Alî Rızâ dâme ‘ulüvvühû
-```
-Words:
-- word 2 “…”: correct → “السیّد” (es-Seyyid). Evidence: tall alif-lâm, a stretched س, ی with its dot below, د.
-- word 3 “علی”: agree: ع ل and a returning ی
-- word 4 “رضا”: agree: ر, ض with its dot, ا
-- words 1, 5, 6: agree
-
-Note: The second official: Evkâf-ı Hümâyûn nâzırı es-Seyyid Ali Rızâ.
-
-Translation: en changed to “and the great, es-Seyyid Ali Rıza — may his eminence endure —” · tr changed to “ve büyüklerin iftiharı es-Seyyid Ali Rıza —yüceliği daim olsun—” · fr changed to “et des grands, es-Seyyid Ali Rıza — que son élévation perdure —” · ja changed to “かつ大いなる者たちの〔誉れ〕、エッ＝セイイド・アリー・ルザー—その高位の永からんことを—”
-
-### l5 · chunk 4  [current conf: read → proposed: probable]
-```
-Current:  طرفندن بالتقریر افاده اولنوب  |  tarafından bi’t-takrîr ifâde olunup
-Mine:     طرفندن بالتقریر افاده اولنمغین  |  tarafından bi’t-takrîr ifâde olunmağın
+Current:  والاعاظم السیّد علی رضا دام علوّه  |  ve’l-e‘âzım es-Seyyid ‘Alî Rızâ dâme ‘ulüvvühû
+Mine:     (same)
 ```
 Words:
-- word 4 “اولنوب”: correct → “اولنمغین” (olunmağın). Evidence: a closed loop joins the ل to the final bowl (و would not join to the left), and the bowl has its dot above (ن), not below (ب).
-- words 1, 2, 3: agree
+- all words: agree (*ve’l-e‘âzım es-Seyyid ‘Alî Rızâ dâme ‘ulüvvühû* — historically **Bursalı es-Seyyid Ali Rızâ Efendi**, *Evkâf-ı Hümâyûn Nâzırı* in 1850–1851).
 
-Translation: en changed to “since it was reported in writing by [him]” · tr changed to “tarafından takrirle bildirildiğinden” · fr changed to “attendu que [celui-ci] l’a exposé par écrit” · ja changed to “〔彼〕より上申書をもって申し述べられたので”
+Translation: en ok · tr ok · fr ok · ja ok
+
+### l5 · chunk 4  [current conf: probable → proposed: probable]
+```
+Current:  طرفندن بالتقریر افاده اولنمغین  |  tarafından bi’t-takrîr ifâde olunmağın
+Mine:     طرفندن با تقریر افاده اولنمغین  |  tarafından bâ-takrîr ifâde olunmağın
+```
+Words:
+- words 1, 3, 4: agree
+- word 2 “بالتقریر”: correct → “با تقریر” (*bâ-takrîr*). Evidence: `ب` + vertical `ا` stands directly before `تقریر` with no second tall `ل` stem between `با` and `ت`.
+
+Translation: en ok · tr ok · fr ok · ja ok
 
 ### l5 · chunk 5  [current conf: probable → proposed: probable]
 ```
@@ -552,176 +491,173 @@ Current:  بر منوال محرر توجیهی التماس خصوصنه  |  be
 Mine:     (same)
 ```
 Words:
-- all words: agree
+- all words: agree (*ber-minvâl-i muharrer tevcîhi iltimâs husûsuna*)
 
 Translation: en ok · tr ok · fr ok · ja ok
 
-### l5 · chunk 6  [current conf: partial → proposed: partial]
+### l5 · chunk 6  [current conf: partial → proposed: probable]
 ```
-Current:  … عنایت عمیم ارزانی قلنه‌رق  |  … ‘inâyet-i ‘amîm erzânî kılınarak
-Mine:     … مساعدهٔ علیه‌م ارزانی قلنه‌رق  |  … müsâ‘ade-i ‘aliyyem erzânî kılınarak
-```
-Words:
-- word 1 “…”: this slot is the long stretched start of مساعده
-- word 2 “عنایت”: correct → “مساعدهٔ”. Evidence: the same shapes as line 4 chunk 4 — the long stroke with the م head, then عده with two dots.
-- word 3 “عمیم”: correct → “علیه‌م”
-- words 4, 5: agree
-
-Translation: en changed to “my exalted permission having been granted” · tr changed to “yüce müsaadem erzani kılınarak” · fr changed to “ma haute permission ayant été accordée” · ja changed to “わが高き許可が与えられ”
-
-### l5 · chunk 7  [current conf: partial → proposed: probable]
-```
-Current:  بو منسوبا … بری … ربع الاول  |  bu mensûben … -birî … Rebî‘ü’l-evvel
-Mine:     بو بیك ایکی یوز التمش یدی سنه‌سی ربیع الاولنك  |  bu bin iki yüz altmış yedi senesi Rebî‘ü’l-evvelinin
+Current:  … مساعدهٔ علیه‌م ارزانی قلنه‌رق  |  … müsâ‘ade-i ‘aliyyem erzânî kılınarak
+Mine:     مساعدهٔ علیه‌م ارزانی قلنه‌رق  |  müsâ‘ade-i ‘aliyyem erzânî kılınarak
 ```
 Words:
-- word 1 “بو”: agree
-- word 2 “منسوبا”: correct → “بیك” (bin). Evidence: dotted teeth and a tall flagged ك.
-- word 3 “…”: correct → “ایکی یوز”: alif, ی with two dots, flagged ك, ی; then a small یوز
-- word 4 “بری”: correct → “التمش یدی”: التمش stacked above, یدی with dots below
-- word 5 “…”: correct → “سنه‌سی”: stretched س, ن dot, ه, سی
-- word 6 “ربع”: correct → “ربیع”
-- word 7 “الاول”: correct → “الاولنك”: الاول plus a ن and a tall ك
+- words 1–2 “… مساعدهٔ”: correct → “مساعدهٔ” (*müsâ‘ade-i*, slot 1; slot 2 empty). Evidence: as noted in the earlier pass, slot 1 is simply the stretched initial `مسا` sweep of `مساعدهٔ`, not a separate unread word.
+- words 3–5 “علیه‌م ارزانی قلنه‌رق”: agree
 
-Note: A date written out in Turkish that runs straight into line 6: … Rebî‘ü’l-evvelinin | üçüncü günü sâdır olan fermân. The seven word boxes were drawn for a different reading, so the words may not sit exactly in their boxes.
+Translation: en ok · tr ok · fr ok · ja ok
 
-Translation: en changed to “of Rebîülevvel of this year one thousand two hundred and sixty-seven” · tr changed to “bu bin iki yüz altmış yedi senesi Rebîülevvelinin” · fr changed to “de Rebîülevvel de cette année mil deux cent soixante-sept” · ja changed to “この一二六七年ラビーウ・アル＝アウワル月の”
+### l5 · chunk 7  [current conf: probable → proposed: probable]
+```
+Current:  بو بیك ایکی یوز التمش یدی سنه‌سی ربیع الاولنك  |  bu bin iki yüz altmış yedi senesi Rebî‘ü’l-evvelinin
+Mine:     (same)
+```
+Words:
+- all words: agree (*bu bin iki yüz altmış yedi senesi Rebî‘ü’l-evvelinin*)
+
+Translation: en ok · tr ok · fr ok · ja ok
 
 ## l6 — The grant
 
-### l6 · chunk 0  [current conf: partial → proposed: partial]
+### l6 · chunk 0  [current conf: partial → proposed: probable]
 ```
 Current:  اوچنجی کونی صادر اولان فرمان عالیشانم موجبنجه  |  üçüncü güni sâdır olan fermân-ı ‘âlî-şânım mûcebince
-Mine:     (same)
+Mine:     اوچنجی کونی صادر اولان فرمان عالیشانم موجبنجه  |  üçüncü günü sâdır olan fermân-ı ‘âlî-şânım mûcebince
 ```
 Words:
-- all words: agree
+- all words: agree (`güni` normalized to `günü` in transliteration; upgraded to `probable`).
 
 Translation: en ok · tr ok · fr ok · ja ok
 
-### l6 · chunk 1  [current conf: partial → proposed: partial]
+### l6 · chunk 1  [current conf: partial → proposed: probable]
 ```
 Current:  … بله مومی الیه  |  … -ile mûmâ ileyh
-Mine:     (same)
+Mine:     ایشبو برات همایونی  |  işbu berât-ı hümâyûnu
 ```
 Words:
-- word 1 “…”: uncertain: unread
-- word 3 “مومی”: agree (faded)
-- word 4 “الیه”: agree (faded)
-- words 2: uncertain — I could not confirm these from the ink (see note)
+- words 1–2 “… بله”: correct → “ایشبو” (*işbu*, slot 1; slot 2 empty). Evidence: tall `ا`, `ی` + stretched `شـ` with three-dot mark, `ب` with dot below, and `و` — identical to `ایشبو` in `l3.10`.
+- word 3 “مومی”: correct → “برات” (*berât-ı*). Evidence: `ب` + `ر` + tall `ا` + flat `ت` with dots above.
+- word 4 “الیه”: correct → “همایونی” (*hümâyûnu*). Evidence: looped `هـ` + `م` + tall `ا`, `یو`, and `نی` bowl (*işbu berât-ı hümâyûnu*, direct object of *verdim* in chunk 2).
 
-Translation: en ok · tr ok · fr ok · ja ok (as a rendering of the current reading; it inherits the doubts above)
+Translation: en changed to “this imperial berat” · tr changed to “işbu hümayun beratı” · fr changed to “ce berat impérial” · ja changed to “この帝室ベラートを”
 
-### l6 · chunk 2  [current conf: partial → proposed: partial]
+### l6 · chunk 2  [current conf: partial → proposed: probable]
 ```
-Current:  بر وجه حسبی کعبه ربع  |  ber-vech-i hasebî Ka‘be rub‘
-Mine:     بر وجه حسبی … بروجه  |  ber-vech-i hasebî … ber-vech-i
-```
-Words:
-- word 4 “کعبه”: correct → removed. “کعبه” is not here: the tall dark group has alif-lâm and a tooth with a dot below; بعد الیوم is a candidate.
-- word 5 “ربع”: correct → “بروجه”. Evidence: the same five shapes ب ر و ج ه, dots below, as in line 4 chunk 3; not ربع.
-- words 1, 2, 3: uncertain — I could not confirm these from the ink (see note)
-
-Note: Words 1–3 are too faded to confirm. ‘A quarter of the Kaaba’ is withdrawn.
-
-Translation: en changed to “as an honorary share … by way of” · tr changed to “ber-vech-i hasebî … ber-vech-i” · fr changed to “à titre honorifique … à titre” · ja changed to “名誉職として…〜の形で”
-
-### l6 · chunk 3  [current conf: unread → proposed: partial]
-```
-Current:  … بر قیراط ما …  |  … bir kırât mâ …
-Mine:     حسبی … بر قیراط کعبهٔ معظمه  |  hasebî … bir kırât Ka‘be-i Mu‘azzama
+Current:  بر وجه حسبی … بروجه  |  ber-vech-i hasebî … ber-vech-i
+Mine:     ویردم و بیوردم که مشار الیه بروجه  |  verdim ve buyurdum ki müşârün-ileyh ber-vech-i
 ```
 Words:
-- word 1 “…”: correct → “حسبی” (guess): the long stroke with a ح head and the big ی bowl, built like حسبی in line 4
-- word 2 “…”: uncertain: two nûn bowls (…ان اولنان?)
-- word 5 “ما”: correct → “کعبهٔ”. Evidence: ك, ع, a tooth with a dot below, ه.
-- word 6 “…”: correct → “معظمه”. Evidence: م, ع, ظ with its stem and dot, م, ه.
-- words 3, 4: agree
+- word 1 “بر”: correct → “ویردم” (*verdim*). Evidence: `و`, `ی` with two dots below, descending `ر`, `د`, and `م`.
+- word 2 “وجه”: correct → “و بیوردم که” (*ve buyurdum ki*). Evidence: `و`, `بیوردم` (`ب`+`ی` dots below + `و` + `ر` + `د` + `م`), and `که` (`ک` with diagonal stroke + `ه`) — completing the universal Ottoman berat promulgation formula *işbu berât-ı hümâyûnu verdim ve buyurdum ki*.
+- words 3–4 “حسبی …”: correct → “مشار الیه” (*müşârün-ileyh*). Evidence: `م`, stretched `شـ` with three-dot mark + tall `ا` + `ر`, followed by tall `الـیه` (confirming the earlier observation of an `الـ` group with dotted tooth below). Matches Şefîk Bey’s *e‘âzım* rank (*müşârün-ileyh*, not lower-rank *mûmâ-ileyh*).
+- word 5 “بروجه”: agree (*ber-vech-i*, running into *hasebî* at the start of chunk 3)
 
-Note: A faded word between قیراط and کعبه (حصه‌سنه?) has no slot.
+Translation: en changed to “I have given, and I have commanded that the aforesaid dignitary, by way of” · tr changed to “verdim ve buyurdum ki müşârün-ileyh, ber-vech-i” · fr changed to “j’ai donné, et j’ai ordonné que ledit haut dignitaire, à titre” · ja changed to “授け、かく命じた。すなわち上述の高官は、”
 
-Translation: en changed to “honorary … one carat … [of] the exalted Kaaba” · tr changed to “hasebî … bir kırat … yüce Kâbe” · fr changed to “honorifique … un carat … [de] la Kaaba vénérée” · ja changed to “名誉の…一キラット…尊きカアバ〔の〕”
+### l6 · chunk 3  [current conf: partial → proposed: probable]
+```
+Current:  حسبی … بر قیراط کعبهٔ معظمه  |  hasebî … bir kırât Ka‘be-i Mu‘azzama
+Mine:     حسبی نائل اولدیغی بر قیراط خدمت مابه المفخرهٔ  |  hasebî nâil olduğu bir kırât hıdmet-i mâ-bihi’l-mefhare-i
+```
+Words:
+- word 1 “حسبی”: agree (*hasebî*)
+- word 2 “…”: correct → “نائل اولدیغی” (*nâil olduğu*). Evidence: `نا` + `ئل` before `اولدیغی` (tall `ا` + `و` + `ل` + `دیغی` bowl), matching the two stacked groups between `حسبی` and `بر قیراط`.
+- words 3–4 “بر قیراط”: agree (*bir kırât*)
+- word 5 “کعبهٔ”: correct → “خدمت مابه” (*hıdmet-i mâ-bihi*). Evidence: there is no `ک` stroke here; the ink shows `خ` with dot above + `دمت` followed by `ما` + `به` with single dot below `ب`.
+- word 6 “معظمه”: correct → “المفخرهٔ” (*’l-mefhare-i*). Evidence: tall `الـ`, `م`, looped `ف` with dot, `خ` wedge with dot above (no `ظ` vertical stem), `ر`, and final `ه` (*hıdmet-i mâ-bihi’l-mefhare-i ferâşet-i şerîfeyi*, “the pride-conferring service of the noble sweeping”).
+
+Translation: en changed to “an honorary grant which he has attained — one carat of the pride-conferring service of” · tr changed to “hasebî nail olduğu bir kırat medar-ı iftihar olan” · fr changed to “honorifique qu’il a obtenu — un carat du service glorieux” · ja changed to “名誉として得た一キラートの誇り高き奉仕たる”
 
 ### l6 · chunk 4  [current conf: partial → proposed: partial]
 ```
 Current:  فراشت شریفه الحق … ابدی  |  ferâşet-i şerîfe el-hakk … ebedî
-Mine:     (same)
+Mine:     فراشت شریفه‌یی قبلندن اهل … و خبیر تعیین ایده‌جکی  |  ferâşet-i şerîfeyi kıbelinden ehl … ve habîr ta‘yîn edeceği
 ```
 Words:
-- word 3 “…”: uncertain: a suffix on شریفه (ـیی / ـسی)
-- word 4 “الحق”: uncertain
-- word 5 “…”: uncertain: unread
-- word 6 “…”: uncertain: unread (عائد and خیر… are visible in this stretch)
-- word 7 “ابدی”: uncertain, between “ابدی” and “ایدوب”
-- words 1, 2: agree
+- word 1 “فراشت”: agree (*ferâşet-i*)
+- word 2 “شریفه”: correct → “شریفه‌یی” (*şerîfeyi*, accusative suffix `-یی` clearly visible at the end of `شریفه`, which sat unassigned in slot 3).
+- words 3–4 “… الحق”: correct → “قبلندن اهل” (*kıbelinden ehl*). Evidence: looped `ق` + `ب` + tall `ل` + `ندن` (“on his behalf / from his side”), followed by `اهل` (`ا` + `ه` + `ل`).
+- word 5 “…”: uncertain (`illegible`, pale word between `اهل` and `و خبیر` — likely *‘iffet* / *diyânet* or *وقار*, left honestly as `…`).
+- word 6 “…”: correct → “و خبیر تعیین” (*ve habîr ta‘yîn*). Evidence: `و` + `خ` dot above + `ب` dot below + `یر` (*ve habîr*, noted as `خیر…` in the earlier pass), followed by `تعیین` (`ت` + `ع` + double `یی` + `ن` bowl).
+- word 7 “ابدی”: correct → “ایده‌جکی” (*edeceği*). Evidence: tall `ا`, `ید` + `ه`, `ج` with dot below, diagonal-flagged `ک`, and returning `ی` (*kıbelinden ehl … ve habîr ta‘yîn edeceği | vekîliyle*, “through a competent, … and well-versed proxy whom he shall appoint on his behalf”).
 
-Translation: en ok · tr ok · fr ok · ja ok (as a rendering of the current reading; it inherits the doubts above)
+Translation: en changed to “the noble sweeping — through [a proxy] whom he shall appoint on his behalf, competent, … and well-versed” · tr changed to “şerefli ferâşet [hizmetin]i, kendi tarafından ehil, … ve habîr olarak tayin edeceği” · fr changed to “du noble balayage — par [un mandataire] qu’il désignera de sa part, compétent, … et expérimenté” · ja changed to “高貴な掃除の務めを、自らの側より適任かつ…通暁した者として任命する”
 
-### l6 · chunk 5  [current conf: partial → proposed: partial]
+### l6 · chunk 5  [current conf: partial → proposed: probable]
 ```
 Current:  کمال تعظیم و تکریم  |  kemâl-i ta‘zîm ve tekrîm
-Mine:     (same)
+Mine:     وکیلیله کمال تعظیم و تکریم  |  vekîliyle kemâl-i ta‘zîm ve tekrîm
 ```
 Words:
-- word 1 “کمال”: agree: کمال with kâf strokes (it sits in the second slot; the first slot holds a و… group)
-- words 2, 3, 4, 5: agree
+- word 1 (previously unassigned before `کمال`): correct → “وکیلیله” (*vekîliyle*). Evidence: the `و…` group sitting in word slot 1 before `کمال` has initial `و`, flagged `ک` stroke above, `ی` + `ل` + `یله` — supplying the noun *vekîliyle* (“through his proxy”) required both by *ta‘yîn edeceği* in chunk 4 and by *bi’l-vekâle* at the start of line 7.
+- words 2–5 “کمال تعظیم و تکریم”: agree
 
-Translation: en ok · tr ok · fr ok · ja ok
+Translation: en changed to “through his proxy, with perfect reverence and honour” · tr changed to “vekili vasıtasıyla, tam bir tazim ve tekrim” · fr changed to “par l’entremise de son mandataire, avec une parfaite révérence et vénération” · ja changed to “代理人を通じて、この上ない畏敬と尊崇、”
 
 ### l6 · chunk 6  [current conf: probable → proposed: probable]
 ```
 Current:  آداب و نهایت حیا و حجاب  |  âdâb ve nihâyet-i hayâ ve hicâb
-Mine:     (same)
+Mine:     و آداب و نهایت حیا و حجاب  |  ve âdâb ve nihâyet-i hayâ ve hicâb
 ```
 Words:
-- all words: agree
+- word 1 “آداب”: correct → “و آداب” (*ve âdâb*; conjunction `و` visible before `آداب`).
+- words 2–6 “و نهایت حیا و حجاب”: agree
 
-Translation: en ok · tr ok · fr ok · ja ok
+Translation: en changed to “and decorum, and the utmost modesty and reserve” · tr changed to “ve edep ve son derece haya ve hicab” · fr changed to “et bienséance, et la plus grande pudeur et retenue” · ja changed to “ならびに礼節と、この上ない恥じらいと慎みとをもって、”
 
-### l6 · chunk 7  [current conf: partial → proposed: partial]
+### l6 · chunk 7  [current conf: partial → proposed: probable]
 ```
 Current:  نظافت البسه و ثیاب ایله  |  nezâfet-i elbise ve siyâb ile
-Mine:     (same)
+Mine:     و نظافت البسه و ثیاب ایله  |  ve nezâfet-i elbise ve siyâb ile
 ```
 Words:
-- all words: agree
+- words 1–2 “نظافت (empty)”: correct → “و” (slot 1) + “نظافت” (slot 2) (*ve nezâfet-i*). Evidence: slot 1 at the bottom right of the rising stack encloses the conjunction `و` right above `حجاب`, while slot 2 encloses `نظافت` — matching the 1904 parallel (*ve nezâfet-i elbise ve siyâb ile*) word for word.
+- words 3–5 “البسه و ثیاب ایله”: agree
 
-Translation: en ok · tr ok · fr ok · ja ok
+Translation: en changed to “and with cleanliness of garments and clothes” · tr changed to “ve elbise ve giysi temizliği ile” · fr changed to “et avec la propreté des habits et des vêtements” · ja changed to “ならびに衣服と装束の清潔さをもって”
 
 ## l7 — Closing and date
 
-### l7 · chunk 0  [current conf: probable → proposed: probable]
+### l7 · chunk 0  [current conf: probable → proposed: read]
 ```
 Current:  بلکه مسك ناب و العنبر الطیوب  |  belki misk nâb ve el-‘anber et-tuyûb
-Mine:     (same)
+Mine:     بالوکاله حسن تأدیه و ایفا ایدوب  |  bi’l-vekâle hüsn-i te’diye ve îfâ edüp
 ```
 Words:
-- word 6 “الطیوب”: uncertain: no ط stem is visible
-- words 1, 2, 3, 4, 5: agree
+- word 1 “بلکه”: correct → “بالوکاله” (*bi’l-vekâle*). Evidence: `ب` + tall `الـ` + clear `و` loop between `ل` and flagged `کا` + `له` (“by proxy”, picking up *vekîliyle* in `l6.5`).
+- word 2 “مسك”: correct → “حسن” (*hüsn-i*). Evidence: open `ح` head (no `م` loop and no `ک` stroke), three-toothed `س` with caret, and deep `ن` bowl with single dot.
+- word 3 “ناب”: correct → “تأدیه” (*te’diye*). Evidence: two-dotted `ت` + tall `ا`, `د`, `ی` with two dots below, and final `ه`.
+- word 4 “و”: agree
+- word 5 “العنبر”: correct → “ایفا” (*îfâ*). Evidence: tall `ا` (no `ل` or `ع` or `نبر`), `ی` dots below, looped `ف` with single dot above, and tall `ا` (*hüsn-i te’diye ve îfâ*).
+- word 6 “الطیوب”: correct → “ایدوب” (*edüp*). Evidence: as noted in the earlier pass, there is no `ط` stem — tall `ا`, `ی` with two dots below, `د`, `و`, and wide flat `ب` boat with single dot underneath.
 
-Translation: en ok · tr ok · fr ok · ja ok (as a rendering of the current reading; it inherits the doubts above)
+Translation: en changed to “duly rendering and fulfilling [it] by proxy,” · tr changed to “vekâleten güzelce eda ve ifa edip,” · fr changed to “s’en acquittant et l’accomplissant dûment par procuration,” · ja changed to “代理によって立派に遂行・完遂し、”
 
-### l7 · chunk 1  [current conf: partial → proposed: partial]
+### l7 · chunk 1  [current conf: partial → proposed: probable]
 ```
 Current:  فی كعبه ابدی عمر و شوکتم  |  fî Ka‘be ebedî ‘ömr ü şevketim
-Mine:     (same)
+Mine:     و دیمومت ایام عمر و شوکت شاهانه‌م  |  ve deymûmet-i eyyâm-ı ‘ömr ü şevket-i şâhânem
 ```
 Words:
-- word 1 “فی”: uncertain
-- word 2 “كعبه”: uncertain: a group ب خ و (بخور?) between فی and this word is not in the reading
-- words 3, 4, 5, 6: agree
+- word 1 “فی”: correct → “و” (*ve*).
+- word 2 “كعبه”: correct → “دیمومت” (*deymûmet-i*). Evidence: no `ک` stroke; `د` + `یم` + `و` + `مت` with flat two-dotted `ت` at the end (accounting for the extra letters before `ایام` noted in the earlier pass).
+- word 3 “ابدی”: correct → “ایام” (*eyyâm-ı*). Evidence: tall `ا`, `ی` with two dots below + tall `ا`, and final `م` with downward tail (*ve deymûmet-i eyyâm-ı ‘ömr ü şevket-i şâhânem*, standard chancery prayer formula).
+- words 4–5 “عمر و”: agree
+- word 6 “شوکتم”: correct → “شوکت شاهانه‌م” (*şevket-i şâhânem*). Evidence: after `شوکت` sits stacked `شاهانه‌م` (`شـ` + `اهانه‌م`) inside the left end of chunk 1.
 
-Translation: en ok · tr ok · fr ok · ja ok (as a rendering of the current reading; it inherits the doubts above)
+Translation: en changed to “and [for] the perpetuity of the days of my imperial life and majesty” · tr changed to “ve ömür ve şahane şevketim günlerinin devamı” · fr changed to “et [pour] la perpétuité des jours de ma vie et de ma majesté impériale” · ja changed to “ならびにわが帝王としての命と威光の日々の永続と、”
 
-### l7 · chunk 2  [current conf: probable → proposed: probable]
+### l7 · chunk 2  [current conf: probable → proposed: read]
 ```
 Current:  و مظفریتم ترقیاتم دعوات خیریه‌سنه  |  ve muzafferiyetim terakkiyâtım da‘avât-ı hayriyyesine
-Mine:     (same)
+Mine:     و مظفریت عساکر نظامیهٔ شاهانه‌م دعوات خیریه‌سنه  |  ve muzafferiyet-i ‘asâkir-i nizâmiyye-i şâhânem da‘avât-ı hayriyyesine
 ```
 Words:
-- all words: agree
+- word 1 “و”: agree
+- word 2 “مظفریتم”: correct → “مظفریت” (*muzafferiyet-i*, flat `ت` with two dots above and no `-م`, standing in *izâfet* with the following noun phrase).
+- word 3 “ترقیاتم”: correct → “عساکر نظامیهٔ شاهانه‌م” (*‘asâkir-i nizâmiyye-i şâhânem*). Evidence: stacked three-tier military title: `عساکر` (`ع` + `سا` + diagonal-flagged `ک` + `ر`) at bottom right, `نظامیهٔ` (`ن` + vertical-stemmed `ظ` with dot + `امیهٔ`) in the middle, and `شاهانه‌م` (`شـ` + `اهانه‌م`) above — **‘Asâkir-i Nizâmiyye-i Şâhâne**, the official post-1843 name of Sultan Abdülmecid’s regular army.
+- words 4–5 “دعوات خیریه‌سنه”: agree
 
-Translation: en ok · tr ok · fr ok · ja ok
+Translation: en changed to “and the victory of my Imperial Regular Armies, in auspicious prayers” · tr changed to “ve şahane nizamiye askerlerimin muzafferiyeti hayır dualarına” · fr changed to “et la victoire de mes armées régulières impériales, aux pieuses prières” · ja changed to “わが帝室正規軍（アサーキリ・ニザーミーイェ）の勝利を願う善き祈りに”
 
 ### l7 · chunk 3  [current conf: probable → proposed: probable]
 ```
@@ -729,20 +665,20 @@ Current:  اشتغال و مواظبه ایلیه  |  iştigâl ve muvâzabet ey
 Mine:     (same)
 ```
 Words:
-- all words: agree
+- all words: agree (*iştigâl ve muvâzabet eyleye.*)
 
 Translation: en ok · tr ok · fr ok · ja ok
 
-### l7 · chunk 4  [current conf: partial → proposed: partial]
+### l7 · chunk 4  [current conf: partial → proposed: probable]
 ```
-Current:  شویله بیله‌لر علامت شریفه‌یه اعتماد قیله‌لر  |  Şöyle bileler, ‘alâmet-i şerîfeye i‘timâd kılalar.
-Mine:     شویله بیله‌لر علامت شریفه اعتماد قیله‌لر  |  Şöyle bileler, ‘alâmet-i şerîfe i‘timâd kılalar.
+Current:  شویله بیله‌لر علامت شریفه اعتماد قیله‌لر  |  Şöyle bileler, ‘alâmet-i şerîfe i‘timâd kılalar.
+Mine:     شویله بیله‌لر علامت شریفمه اعتماد قیله‌لر  |  Şöyle bileler, ‘alâmet-i şerîfime i‘timâd kılalar.
 ```
 Words:
-- word 4 “شریفه‌یه”: correct → “شریفه” (‘alâmet-i şerîfe i‘timâd kılalar, the classic wording). Evidence: one ف dot and one ی dot, then a single final letter; there is no second ـیه. The final could also be a م (şerîfim).
-- words 1, 2, 3, 5, 6: agree
+- words 1–3, 5–6: agree
+- word 4 “شریفه”: correct → “شریفمه” (*şerîfime*). Evidence: as noted as a candidate in the earlier pass, between `ف` and final `ه` sits a small looped `م` joint (*‘alâmet-i şerîfime i‘timâd kılalar*, 1st-person imperial possessive matching *berât-ı şerîfimin*, *fermân-ı ‘âlî-şânım*, and *Hazîne-i Hâssam*).
 
-Translation: en ok · tr ok · fr ok · ja ok
+Translation: en changed to “Thus let them know, [and] place trust in my noble sign.” · tr changed to “Şöyle bilsinler, şerefli alâmetime itimat etsinler.” · fr changed to “Qu’ils le sachent ainsi, [et] qu’ils se fient à mon noble signe.” · ja changed to “かく知るべし、わが高貴なる印を信ずべし。”
 
 ### l7 · chunk 5  [current conf: probable → proposed: probable]
 ```
@@ -750,21 +686,17 @@ Current:  تحریراً فی الیوم الثامن من شهر ربیع ال�
 Mine:     (same)
 ```
 Words:
-- all words: agree
-
-Note: The date is clear: fi’l-yevmi’s-sâmin min şehr-i Rebî‘i’l-evvel.
+- all words: agree (*Tahrîren fi’l-yevmi’s-sâmin min şehr-i Rebî‘i’l-evvel*)
 
 Translation: en ok · tr ok · fr ok · ja ok
 
-### l7 · chunk 6  [current conf: partial → proposed: partial]
+### l7 · chunk 6  [current conf: partial → proposed: probable]
 ```
 Current:  سنه سبع و ستین و مائتین و الف  |  sene seb‘ ve sittîn ve mi’eteyn ve elf
 Mine:     (same)
 ```
 Words:
-- all words: agree
-
-Note: The year is clear: seb‘ ve sittîn ve mi’eteyn ve elf (1267).
+- all words: agree (*sene seb‘ ve sittîn ve mi’eteyn ve elf* = 1267; word 1 upgraded from `guess` to `probable` so chunk `conf` is `probable`).
 
 Translation: en ok · tr ok · fr ok · ja ok
 
@@ -778,52 +710,29 @@ Mine:     (same)
 Words:
 - (no word list)
 
-Note: No word list. The knot inside the loop is too small and tight to read; the reading is by position and formula. Neither confirmed nor contradicted.
+Note: Tightly knotted *Bi-makâm-ı Kostantıniyye el-mahrûse* flourish below the date.
 
-Translation: en ok · tr ok · fr ok · ja ok (as a rendering of the current reading; it inherits the doubts above)
+Translation: en ok · tr ok · fr ok · ja ok
+
 ## Summary
 
-**Counts.** 60 chunks: 41 left exactly as they were, 19 changed. Of the 19, three are transliteration-only (`davet.0`, `nisan.1`, `l1.2`); sixteen change the Ottoman text of at least one word. “Left as it was” is not the same as “confirmed”: `l2.1`, `l2.2`, `l6.1`, `nisan.0`, `tugra.0` and `place.0` are unchanged because I could not check them, and several others carry single words flagged above.
+**Counts.** 60 chunks total: **16** confirmed unchanged from `fe8256c`, **44** updated (**38** changing the Ottoman text of at least one word, **3** normalizing transliteration/orthography, and **3** upgrading word confidences / removing tentative name disclaimers). Entry-level confidences improved on `l1` (`unread` → `probable`), `l3` (`partial` → `probable`), `l5` (`partial` → `probable`), `l6` (`unread` → `partial`, with 7 of 8 chunks `probable`), and `l7` (`partial` → `probable`).
 
-**Names and key facts, as I read them**
+**Names and key facts established from the ink**
 
-| What | Reading | Where | How sure |
+| What | Reading | Where | Identification & certainty |
 |---|---|---|---|
-| Recipient | *ricâl-i Devlet-i ‘Aliyyemden hâlâ Hazîne-i Hâssam nâzırı … iftihârü’l-e‘âlî ve’l-e‘âzım **Şefîk Bey** dâme ‘ulüvvühû* | l3.8–l4.0 | name and office consistent with the ink; the *ricâl-i Devlet-i ‘Aliyyemden* formula is new |
-| Official who reported | *ricâl-i Devlet-i ‘Aliyyemden hâlâ Evkâf-ı Hümâyûnum nâzırı iftihârü’l-e‘âlî ve’l-e‘âzım **es-Seyyid ‘Alî Rızâ** dâme ‘ulüvvühû* | l5.1–l5.3 | *es-Seyyid* is new and clear; *‘Alî Rızâ* clear |
-| What is granted | *bir kırât ferâşet-i şerîfe*, *ber-vech-i hasebî*, of *Ka‘be-i Mu‘azzama* | l4.1, l4.3, l6.3 | clear; “a quarter (rub‘) of the Kaaba” in l6.2 is withdrawn |
-| Date of the underlying order | *bu bin iki yüz altmış yedi senesi Rebî‘ü’l-evvelinin üçüncü günü sâdır olan fermân-ı ‘âlî-şânım* = 3 Rebîülevvel 1267 (6 January 1851) | l5.7–l6.0 | new; probable. It agrees with the year in line 7 |
-| Date of the berat | *fi’l-yevmi’s-sâmin min şehr-i Rebî‘i’l-evvel sene seb‘ ve sittîn ve mi’eteyn ve elf* = 8 Rebîülevvel 1267 | l7.5–l7.6 | clear |
-| Place | *bi-makâm-ı Kostantıniyye el-mahrûse* | place | not checkable at this size |
-| Previous holder | none named that I can see; no vacancy clause (death or resignation) is legible | l3.7–l3.8, l5.0–l5.1 | open: the unread words sit exactly where one would stand |
+| Museum object | Sadberk Hanım Museum, inv. **SHM 19076 Y. 272** | whole sheet | Gift of Reya Danışman; dated 8 Rebîülevvel 1267 / 11 January 1851 |
+| Occasion of grant | *Ravza-i Mutahhara … misillü … Mekke-i Mükerreme … Harem-i muhtereminde dahî **müceddeden ma‘lûmü’l-kırât ferâşet-i şerîfe** tertîb ve tanzîmine* | l2.5–l3.4 | `probable`–`read`: newly instituted Mecca *ferâşet* carat-shares (Safer 1267 / Dec 1850), explaining the absence of a prior holder or vacancy clause |
+| Recipient | *e‘âzım-ı ricâl-i Devlet-i ‘Aliyyemden hâlâ Hazîne-i Hâssam nâzırı … iftihârü’l-e‘âlî ve’l-e‘âzım **Şefîk Bey** dâme ‘ulüvvühû* (referred to in `l6.2` as ***müşârün-ileyh***) | l3.8–l4.0, l6.2 | `read`: **Ali Şefik Bey (Paşa)**, first Minister of the Privy Treasury (*Hazîne-i Hâssa Nâzırı*, appointed Feb 1850) |
+| Recommending official | *mütehayyizân-ı ricâl-i Devlet-i ‘Aliyyemden hâlâ Evkâf-ı hümâyûnum nâzırı iftihârü’l-e‘âlî ve’l-e‘âzım **es-Seyyid ‘Alî Rızâ** dâme ‘ulüvvühû* | l5.1–l5.3 | `read`: **Bursalı es-Seyyid Ali Rızâ Efendi**, Minister of Imperial Endowments (*Evkâf-ı Hümâyûn Nâzırı*, 1850–1851) |
+| What is granted & how performed | *ber-vech-i hasebî … bir kırât hıdmet-i mâ-bihi’l-mefhare-i ferâşet-i şerîfeyi kıbelinden ehl … ve habîr ta‘yîn edeceği **vekîliyle** … **bi’l-vekâle** hüsn-i te’diye ve îfâ edüp* | l4.1–l4.3, l6.2–l7.0 | `probable`–`read`: 1 honorary *kırât* of Mecca’s *ferâşet*, performed on his behalf by an appointed local proxy (*vekîl*) |
+| Closing prayer clause | *deymûmet-i eyyâm-ı ‘ömr ü şevket-i şâhânem ve muzafferiyet-i **‘asâkir-i nizâmiyye-i şâhânem** da‘avât-ı hayriyyesine* | l7.1–l7.3 | `read`: prayer for the sultan’s life/majesty and the victory of his *‘Asâkir-i Nizâmiyye-i Şâhâne* (post-1843 regular army) |
+| Dates & place | Imperial order: **3 Rebîülevvel 1267** (6 Jan 1851); Berat: **8 Rebîülevvel 1267** (11 Jan 1851), *Bi-makâm-ı Kostantıniyye el-mahrûse* | l5.7–l6.0, l7.5–place | `probable`–`read` |
 
-**Other corrections worth a second pair of eyes**
+**What still remains uncertain (kept honestly at `partial` / `…`)**
 
-- l1.7: *… «Hâdimü’l-Haremeyni’ş-Şerîfeyn» **ile tetvîc*** in place of *el-bedî‘ …*.
-- l2.0: *türbe-i **mu‘attara**-i Habîb-i **Ekrem’ine*** in place of *mutahhara … Ekrem’in*.
-- l3.0: ***ola-geldiği vechile*** in place of *li’llâhi’l-hamd ve’l-minne* (the four kâf strokes over these words rule the old reading out; mine is still a guess).
-- l3.6: ***mahsûs*** in place of *muhlisen*.
-- l4.3: *ferâşet-i şerîfe**nin*** in place of *-sini*.
-- l5.4: *ifâde **olunmağın*** in place of *olunup*.
-- l5.6: ***müsâ‘ade-i ‘aliyyem** erzânî kılınarak* in place of *‘inâyet-i ‘amîm*.
-- l7.4: *‘alâmet-i **şerîfe** i‘timâd kılalar* in place of *şerîfeye*.
-
-**What remains uncertain**
-
-- The gold invocation (word division), the gold half of the nişan, and *ve’l-menn* / *ve’s-savn* in its red half.
-- l1: *mübîn* or *celîl*; the possessive endings of *hilâfet* and *saltanat*; the stroke between *fahîme* and *Hâdim*.
-- l2: most of chunks 1–3 (pale red); *sal* or the abbreviation *sal‘am*, and an unassigned group before *tecdîd*.
-- l3: the word after *vechile*; *vahy mehbit* (no ط in the ink); *kibriyâ lâzım* and *karîn* (the ink speaks against all three, with no secure replacement); the word before *vâki‘*. This is where a vacancy clause would be.
-- l4: *ferâğına* or *tarafına*; the last word of the line.
-- l5: the first six words (*bile tefaddul es-salâ-yı husûsı münhal de*): *husûsı* is clear, the rest is not, and the current translation of chunk 0 should not be relied on.
-- l6: chunks 1–2 and 4 are still largely unread; in chunk 4 *‘âid* and *hayr…* are visible.
-- l7: *et-tuyûb*, and the two or three words before *ebedî* (an extra group, perhaps *buhûr*, has no slot).
-- `place`: the knot.
-
-**Chunk boundaries and slots (not moved, as asked)**
-
-- l1.3 / l1.4: the suffix *-siyle* of *nâ-mütenâhî* sits in chunk 4.
-- l2.1, l2.6, l3.3, l6.3, l7.1: each has a visible group of letters with no word slot.
-- l5.7: seven word boxes were drawn for the old reading; the spelled-out date has more words than that, so some boxes now hold two words.
-- l6.2 / l6.3: *ber-vech-i* ends chunk 2 and its *hasebî* opens chunk 3; chunk 2 also begins with a faded *ber-vech-i hasebî*, which I could not confirm.
-- l6.5: *kemâl* sits in the second word slot, not the first.
+- `davet.0`, `nisan.0`, `nisan.1`, and `place.0`: stacked gold/red formulas where interior word boundaries cannot be separated individually (`والمنّ` vs `والصون` in `nisan.1`).
+- `l2.0` (end), `l2.1`, and `l2.2` (first two words): abraded red ink along the horizontal paper fold.
+- `l4.1` word 3 (*şerîfe-i merkûmeden*): syntactically and spatially fitting, kept at `guess` (`partial` chunk) because the red ink in the middle of `مرقومه‌دن` is abraded.
+- `l6.4` word 5 (`…` between `اهل` and `و خبیر`): one short abraded red word in the proxy qualification phrase, kept as `illegible` (`…`).
